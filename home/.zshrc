@@ -11,10 +11,20 @@ ZSH_THEME="robbyrussell"
 # Example aliases
 alias zshconfig="vim ~/.zshrc"
 alias ohmyzsh="vim ~/.oh-my-zsh"
+
 alias mmbs="bundle exec middleman build && bundle exec middleman s3_sync"
 alias ui="cd ~/Projects/ui_collaboration/"
 alias mm="bundle exec middleman"
 alias reloadzsh=". ~/.zshrc"
+
+# Phoenix production ui
+function phxprod() { 
+	cd /Users/bendalton/Projects/gordian/RSMeansProcurement/RSMPWebUI/RSMP.Web
+	vim_new_tab
+	open -a "/Applications/Cisco/Cisco AnyConnect Secure Mobility Client.app"
+	open -a "/Applications/Google Chrome.app" "http://localhost:8080"
+	gulp webserver
+}
 
 # Start working on project Phoenix
 function risefromtheashes() {
@@ -26,11 +36,15 @@ function risefromtheashes() {
 
 function mmedit() {
 	port=${1:="4567"}
+	vim_new_tab
+	open -a "/Applications/Google Chrome.app" "http://127.0.0.1:$port/__middleman/sitemap/"
+	bundle exec middleman -p=$port
+}
+
+function vim_new_tab() { 
 	osascript -e 'tell application "iTerm" to activate' \
 		-e 'tell application "System Events" to tell process "iTerm" to keystroke "t" using command down' \
 		-e 'tell application "iTerm" to tell session -1 of current terminal to write text "cd '$PWD' && vim ."'
-	open -a "/Applications/Google Chrome.app" "http://127.0.0.1:$port/__middleman/sitemap/"
-	bundle exec middleman -p=$port
 }
 
 function build-emails() {
@@ -44,6 +58,17 @@ function replace_symbols() {
 
 export LC_CTYPE=C
 export LANG=C
+
+alias nib='
+ docker run \
+	-it \
+	--rm \
+	-v $(pwd):$(pwd) \
+	-w $(pwd) \
+	-v $HOME/.docker/config.json:/root/.docker/config.json:ro \
+	-v /var/run/docker.sock:/var/run/docker.sock \
+	-e "DOCKER_HOST_URL=$DOCKER_HOST" \
+		 technekes/nib'
 
 # for devbox
 export DEV_BOX=$HOME/Projects/devbox
@@ -108,3 +133,6 @@ eval "$(rbenv init -)"
 
 export PATH=$PATH:/Users/bendalton/android/platform-tools
 export PATH=$PATH:/Applications/Postgres.app/Contents/Versions/latest/bin
+
+eval $(docker-machine env dinghy)
+alias fig=docker-compose
