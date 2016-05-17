@@ -7,15 +7,27 @@ ZSH=$HOME/.oh-my-zsh
 # time that oh-my-zsh is loaded.
 ZSH_THEME="robbyrussell"
 
-
 # Example aliases
 alias zshconfig="vim ~/.zshrc"
 alias ohmyzsh="vim ~/.oh-my-zsh"
+alias reloadzsh=". ~/.zshrc"
 
-alias mmbs="bundle exec middleman build && bundle exec middleman s3_sync"
 alias ui="cd ~/Projects/ui_collaboration/"
 alias mm="bundle exec middleman"
-alias reloadzsh=". ~/.zshrc"
+alias mmb="bundle exec middleman build"
+alias mmbs="bundle exec middleman build && bundle exec middleman s3_sync"
+
+function buildOneEmail() { 
+	bundle exec middleman build --glob \"${1}\" --no-clean
+	echo Done building...
+	echo Replacing symbols...
+	replace_symbols
+	echo Done.
+}
+
+function addS3Creds() { 
+	ln -s ~/.s3_sync .s3_sync
+}
 
 # Phoenix production ui
 function phxprod() { 
@@ -27,7 +39,7 @@ function phxprod() {
 }
 
 # Start working on project Phoenix
-function risefromtheashes() {
+function phxproto() {
   port=${1:="4567"}
 	location="/Users/bendalton/Projects/gordian/RSM-UXUI"
 	cd $location
@@ -50,7 +62,6 @@ function vim_new_tab() {
 function build-emails() {
   bundle exec middleman build && find ./build/ -type f -exec sed -i '' -e 's/®/\&reg;/g ; s/©/\&copy;/g ; s/%20/ /g ; s/%7B/\{/g ; s/%7D/\}/g ; s/%7C\*/\|\*/g ; s/*%7C/\*\|/g ; s/™/\&trade;/g' {} \;
 }
-
 
 function replace_symbols() {
   find ./build/ -type f -exec sed -i '' -e 's/®/\&reg;/g ; s/©/\&copy;/g ; s/%20/ /g     ; s/%7B/\{/g ; s/%7D/\}/g ; s/%7C\*/\|\*/g ; s/*%7C/\*\|/g ; s/™/\&trade;/g' {} \;
@@ -78,6 +89,8 @@ alias vhalt="cd $DEV_BOX; vagrant halt;"
 alias vssh="cd $DEV_BOX; vagrant ssh;"
 alias apps="cd $DEV_BOX/apps"
 alias gems="cd $DEV_BOX/gems"
+
+alias reactsimplestarter="cd /Users/bendalton/Projects/udemy/react-redux/ReduxSimpleStarter"
 
 function run_command_on_devbox() {
   ssh -p 2222 -i ~/.vagrant.d/insecure_private_key vagrant@localhost "source ~/.bash_profile; $1"
@@ -134,5 +147,4 @@ eval "$(rbenv init -)"
 export PATH=$PATH:/Users/bendalton/android/platform-tools
 export PATH=$PATH:/Applications/Postgres.app/Contents/Versions/latest/bin
 
-eval $(docker-machine env dinghy)
-alias fig=docker-compose
+eval $(dinghy shellinit)

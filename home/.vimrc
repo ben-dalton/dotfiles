@@ -14,6 +14,7 @@ Plugin 'vim-airline/vim-airline'
 Plugin 'vim-airline/vim-airline-themes'
 Plugin 'Lokaltog/vim-easymotion'
 Plugin 'Raimondi/delimitMate'
+Plugin 'ternjs/tern_for_vim'
 
 " Color Schemes
 " Plugin 'altercation/vim-colors-solarized'
@@ -22,11 +23,12 @@ Plugin 'Raimondi/delimitMate'
 " Plugin 'Lokaltog/vim-distinguished'
 " Plugin 'michalbachowski/vim-wombat256mod'
 Plugin 'nanotech/jellybeans.vim'
+Plugin 'marciomazza/vim-brogrammer-theme'
 
 Plugin 'mattn/emmet-vim'
 Plugin 'kien/ctrlp.vim'
 Plugin 'cakebaker/scss-syntax.vim'
-Plugin 'scrooloose/syntastic'
+" Plugin 'scrooloose/syntastic'
 Plugin 'tpope/vim-unimpaired' " [b for prev buffer
 Plugin 'tpope/vim-surround' " cs{[ to change surrounding {} to []
 Plugin 'tpope/vim-commentary' " gc to comment in visual mode
@@ -44,9 +46,11 @@ Plugin 'honza/vim-snippets'
 Plugin 'pangloss/vim-javascript'
 Plugin 'mxw/vim-jsx'
 Bundle "justinj/vim-react-snippets"
+Plugin 'moll/vim-node' " gf to open imported/required js file
 
 " All of your Plugins must be added before the following line
 call vundle#end()            " required
+
 filetype plugin indent on    " required
 
 let g:UltiSnipsExpandTrigger       ="<c-tab>"
@@ -55,18 +59,18 @@ let g:UltiSnipsJumpBackwardTrigger = "<s-tab>"
 
 " Enable tabbing through list of results
 function! g:UltiSnips_Complete()
-    call UltiSnips#ExpandSnippet()
-    if g:ulti_expand_res == 0
-        if pumvisible()
-            return "\<C-n>"
-        else
-            call UltiSnips#JumpForwards()
-            if g:ulti_jump_forwards_res == 0
-               return "\<TAB>"
-            endif
-        endif
-    endif
-    return ""
+	call UltiSnips#ExpandSnippet()
+	if g:ulti_expand_res == 0
+		if pumvisible()
+			return "\<C-n>"
+		else
+			call UltiSnips#JumpForwards()
+			if g:ulti_jump_forwards_res == 0
+				return "\<TAB>"
+			endif
+		endif
+	endif
+	return ""
 endfunction
 
 au InsertEnter * exec "inoremap <silent> " . g:UltiSnipsExpandTrigger . " <C-R>=g:UltiSnips_Complete()<cr>"
@@ -74,28 +78,31 @@ au InsertEnter * exec "inoremap <silent> " . g:UltiSnipsExpandTrigger . " <C-R>=
 " Expand snippet or return
 let g:ulti_expand_res = 0
 function! Ulti_ExpandOrEnter()
-    call UltiSnips#ExpandSnippet()
-    if g:ulti_expand_res
-        return ''
-    else
-        return "\<return>"
+	call UltiSnips#ExpandSnippet()
+	if g:ulti_expand_res
+		return ''
+	else
+		return "\<return>"
 endfunction
 
 inoremap <return> <C-R>=Ulti_ExpandOrEnter()<CR>
 
 " Character encoding 
 if has("multi_byte")
-  if &termencoding == ""
-    let &termencoding = &encoding
-  endif
-  set encoding=utf-8
-  setglobal fileencoding=utf-8
-  "setglobal bomb
-  set fileencodings=ucs-bom,utf-8,latin1
+	if &termencoding == ""
+		let &termencoding = &encoding
+	endif
+	set encoding=utf-8
+	setglobal fileencoding=utf-8
+	"setglobal bomb
+	set fileencodings=ucs-bom,utf-8,latin1
 endif
 
 " allow html syntax highlighting in js files
 let javascript_enable_domhtmlcss = 1
+
+" use JSX syntax highlighting in all js files
+let g:jsx_ext_required = 0
 
 " Line/Selection bubbling 
 " Bubble single lines
@@ -134,12 +141,12 @@ nnoremap <C-f> :CtrlPMRU<CR>
 " 
 
 " Emmet controls 
-let g:user_emmet_install_global = 0
+" let g:user_emmet_install_global = 0 "enable for only HTML and CSS
 " let g:user_emmet_expandabbr_key = '<Tab>'
 " imap <expr> <tab> emmet#expandAbbrIntelligent("\<tab>")
-" let g:use_emmet_complete_tag = 1
-autocmd FileType html,css,scss,php EmmetInstall
- 
+" let g:user_emmet_complete_tag = 1
+autocmd FileType jsx,js,html,css,scss,php EmmetInstall
+
 " ,q to quit
 :nnoremap <Leader>q :Bdelete<CR>
 
@@ -148,6 +155,11 @@ autocmd FileType html,css,scss,php EmmetInstall
 " create this folder first!!)
 set noswapfile
 set nobackup
+
+
+" Highlight current column for haml and sass
+autocmd Filetype haml setlocal cursorcolumn
+autocmd Filetype sass setlocal cursorcolumn
 
 " Hightlight spaces and tabs 
 " Highlight redundant whitespaces and tabs. Only shows trailing whitespace :)
@@ -161,16 +173,18 @@ let g:fuzzy_ignore = "*.png;*.PNG;*.JPG;*.jpg;*.GIF;*.gif;"
 
 " Set Syntastic checkers 
 let g:syntastic_scss_checkers = ['scss_lint']
-let g:syntastic_javascript_checkers = ['jshint']
+" let g:syntastic_javascript_checkers = ['eslint']
+" let g:syntastic_javascript_checkers = ['jshint']
 let g:syntastic_check_on_open = 1
 let g:syntastic_error_symbol='✗'
 let g:syntastic_warning_symbol='⚠'
 let g:syntastic_style_error_symbol = '✗'
 let g:syntastic_style_warning_symbol = '⚠'
+let g:syntastic_html_tidy_ignore_errors=['proprietary attribute "ng-']
 
 " HTML tag indentation settings 
 " Make HTML get indented on the correct tags
-let g:html_indent_inctags = "html,body,head,tbody,span,b,a,div"
+let g:html_indent_inctags = "html,body,head,tbody,table,nav,footer,tr"
 
 " Shortcut to indent whole file 
 " indent the whole file and return to original position
@@ -188,7 +202,7 @@ set termencoding=utf-8
 " Make sure powerline fonts are used
 let g:airline_powerline_fonts = 1
 if !exists('g:airline_symbols')
-  let g:airline_symbols = {}
+	let g:airline_symbols = {}
 endif
 
 let g:airline_theme="jellybeans"
@@ -210,7 +224,7 @@ map <C-n> :NERDTreeToggle<CR>
 
 " Function to trim trailing whitespace on save 
 function! TrimWhiteSpace()
-  %s/\s\+$//e
+	%s/\s\+$//e
 endfunction
 
 "autocmd BufWritePre *.vimrc *.html *.scss *.js :call TrimWhiteSpace()
@@ -226,7 +240,12 @@ set background=dark
 " colorscheme tayra
 " colorscheme hybrid
 " colorscheme distinguished
-colorscheme jellybeans
+" colorscheme jellybeans
+colorscheme brogrammer
+hi Normal ctermbg=none
+hi NonText ctermbg=none
+hi CursorLine ctermbg=0
+hi LineNr ctermfg=darkGray ctermbg=0
 
 " Standard Vim settings 
 set showcmd
@@ -339,15 +358,15 @@ set wildignore+=**/node_modules/**
 
 " Set clipboard 
 if has('unnamedplus')
-  set clipboard=unnamedplus
+	set clipboard=unnamedplus
 else
-  set clipboard=unnamed
+	set clipboard=unnamed
 endif 
 
 " Highlight current line number 
 hi CursorLineNR cterm=bold ctermfg=220
 augroup CLNRSet
-    autocmd! ColorScheme * hi CursorLineNR cterm=bold ctermfg=220
+	autocmd! ColorScheme * hi CursorLineNR cterm=bold ctermfg=220
 augroup END
 
 " Ag setup Silver Searcher 
@@ -358,3 +377,4 @@ let g:delimitMate_expand_cr = 1
 let g:delimitMate_expand_space = 1
 
 set nocompatible              " be improved, required
+
