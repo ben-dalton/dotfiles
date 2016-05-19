@@ -144,7 +144,8 @@ nnoremap <C-f> :CtrlPMRU<CR>
 " let g:user_emmet_install_global = 0 "enable for only HTML and CSS
 " let g:user_emmet_expandabbr_key = '<Tab>'
 " imap <expr> <tab> emmet#expandAbbrIntelligent("\<tab>")
-" let g:user_emmet_complete_tag = 1
+let g:user_emmet_complete_tag = 1
+let g:user_emmet_mode='a' "enable all functions in all modes.
 autocmd FileType jsx,js,html,css,scss,php EmmetInstall
 
 " ,q to quit
