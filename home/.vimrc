@@ -15,6 +15,7 @@ Plugin 'vim-airline/vim-airline-themes'
 Plugin 'Lokaltog/vim-easymotion'
 Plugin 'Raimondi/delimitMate'
 Plugin 'ternjs/tern_for_vim'
+Bundle 'lfilho/cosco.vim'
 
 " Color Schemes
 " Plugin 'altercation/vim-colors-solarized'
@@ -121,6 +122,11 @@ setl iskeyword=@,48-57,192-255,%,#
 " will use the stadard leader (\).
 let mapleader=","
 " 
+
+" Allow Cosco to toggle ending comma or semicolon with ,;
+command! CommaOrSemiColon call cosco#commaOrSemiColon()
+autocmd FileType javascript,css,jsx nnoremap <silent> <Leader>; :call cosco#commaOrSemiColon()<CR>
+autocmd FileType javascript,css,jsx inoremap <silent> <Leader>; <c-o>:call cosco#commaOrSemiColon()<CR>
 
 " Set up CTRL P 
 " First set up patterns to ignore
