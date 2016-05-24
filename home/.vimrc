@@ -114,6 +114,12 @@ vmap <C-Up> [egv
 vmap <C-Down> ]egv
 " 
 
+" Let that pinky rest
+imap kj <ESC>
+imap jk <ESC>
+vmap kj <ESC>
+"
+
 " Define what a keyword break is 
 setl iskeyword=@,48-57,192-255,%,#
 " 
