@@ -5,7 +5,7 @@ ZSH=$HOME/.oh-my-zsh
 # Look in ~/.oh-my-zsh/themes/
 # Optionally, if you set this to "random", it'll load a random theme each
 # time that oh-my-zsh is loaded.
-ZSH_THEME="robbyrussell"
+ZSH_THEME="honukai"
 
 # Example aliases
 alias zshconfig="vim ~/.zshrc"
@@ -16,7 +16,7 @@ alias ui="cd ~/Projects/ui_collaboration/"
 alias mm="bundle exec middleman"
 alias mmb="bundle exec middleman build"
 alias mmbs="bundle exec middleman build && bundle exec middleman s3_sync"
-alias copypath="pwd|pbcopy"
+alias cppath="pwd|pbcopy"
 
 function buildOneEmail() { 
 	bundle exec middleman build --glob \"${1}\" --no-clean
@@ -33,7 +33,7 @@ function addS3Creds() {
 # Phoenix production ui
 function phxprod() { 
 	cd /Users/bendalton/Projects/gordian/RSMeansProcurement/RSMPWebUI/RSMP.Web
-	vim_new_tab
+	tab "cd '$PWD' && vim ."
 	open -a "/Applications/Cisco/Cisco AnyConnect Secure Mobility Client.app"
 	open -a "/Applications/Google Chrome.app" "http://localhost:8080"
 	gulp webserver
@@ -49,15 +49,9 @@ function phxproto() {
 
 function mmedit() {
 	port=${1:="4567"}
-	vim_new_tab
+	tab "cd '$PWD' && vim ."
 	open -a "/Applications/Google Chrome.app" "http://127.0.0.1:$port/__middleman/sitemap/"
 	bundle exec middleman -p=$port
-}
-
-function vim_new_tab() { 
-	osascript -e 'tell application "iTerm" to activate' \
-		-e 'tell application "System Events" to tell process "iTerm" to keystroke "t" using command down' \
-		-e 'tell application "iTerm" to tell session -1 of current terminal to write text "cd '$PWD' && vim ."'
 }
 
 function build-emails() {
@@ -117,7 +111,7 @@ function new-react-starter() {
 		echo "Installing dependencies"
 		npm install
 		open -a "/Applications/Google Chrome.app" "http://127.0.0.1:8080/webpack-dev-server/"
-		vim_new_tab
+		tab "cd '$PWD' && vim ."
 		echo "Starting webpack webserver"
 		npm start
 	else
@@ -154,7 +148,7 @@ COMPLETION_WAITING_DOTS="true"
 # Which plugins would you like to load? (plugins can be found in ~/.oh-my-zsh/plugins/*)
 # Custom plugins may be added to ~/.oh-my-zsh/custom/plugins/
 # Example format: plugins=(rails git textmate ruby lighthouse)
-plugins=(git bundler chucknorris colorize cp npm)
+plugins=(osx git bundler chucknorris colorize cp npm)
 
 source $ZSH/oh-my-zsh.sh
 
