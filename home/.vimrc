@@ -38,6 +38,7 @@ Plugin 'wesQ3/vim-windowswap' " <leader>ww to swap windows
 Plugin 'moll/vim-bbye'
 Plugin 'gorodinskiy/vim-coloresque' " highlight hex colors
 Bundle 'mohitleo9/vim-fidget'
+Plugin 'airblade/vim-gitgutter'
 
 Bundle 'ervandew/supertab'
 Plugin 'Valloric/YouCompleteMe'
