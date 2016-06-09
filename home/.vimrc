@@ -29,7 +29,8 @@ Plugin 'marciomazza/vim-brogrammer-theme'
 Plugin 'mattn/emmet-vim'
 Plugin 'kien/ctrlp.vim'
 Plugin 'cakebaker/scss-syntax.vim'
-" Plugin 'scrooloose/syntastic'
+Plugin 'scrooloose/syntastic'
+Plugin 'gcorne/vim-sass-lint'
 Plugin 'tpope/vim-unimpaired' " [b for prev buffer
 Plugin 'tpope/vim-surround' " cs{[ to change surrounding {} to []
 Plugin 'tpope/vim-commentary' " gc to comment in visual mode
@@ -39,6 +40,7 @@ Plugin 'moll/vim-bbye'
 Plugin 'gorodinskiy/vim-coloresque' " highlight hex colors
 Bundle 'mohitleo9/vim-fidget'
 Plugin 'airblade/vim-gitgutter'
+Plugin 'rhysd/committia.vim'
 
 Bundle 'ervandew/supertab'
 Plugin 'Valloric/YouCompleteMe'
@@ -186,14 +188,21 @@ let g:fuzzy_ignore = "*.png;*.PNG;*.JPG;*.jpg;*.GIF;*.gif;"
 " 
 
 " Set Syntastic checkers 
+let g:syntastic_sass_checkers = ['sass_lint']
 let g:syntastic_scss_checkers = ['scss_lint']
+let g:syntastic_haml_checkers = ['haml_lint']
 " let g:syntastic_javascript_checkers = ['eslint']
 " let g:syntastic_javascript_checkers = ['jshint']
 let g:syntastic_check_on_open = 1
+highlight SyntasticErrorSign guifg=white guibg=red
+highlight SyntasticWarningSign guifg=white guibg=red
+highlight SyntasticErrorLine guibg=#2f0000
 let g:syntastic_error_symbol='✗'
 let g:syntastic_warning_symbol='⚠'
 let g:syntastic_style_error_symbol = '✗'
 let g:syntastic_style_warning_symbol = '⚠'
+" let g:syntastic_style_warning_symbol = "*"
+" let g:syntastic_warning_symbol = "*"
 let g:syntastic_html_tidy_ignore_errors=['proprietary attribute "ng-']
 
 " HTML tag indentation settings 
