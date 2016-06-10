@@ -17,6 +17,7 @@ alias mm="bundle exec middleman"
 alias mmb="bundle exec middleman build"
 alias mmbs="bundle exec middleman build && bundle exec middleman s3_sync"
 alias cppath="pwd|pbcopy"
+alias git=hub
 
 function buildOneEmail() { 
 	bundle exec middleman build --glob \"${1}\" --no-clean
