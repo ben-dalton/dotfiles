@@ -33,6 +33,7 @@ Plugin 'scrooloose/syntastic'
 Plugin 'gcorne/vim-sass-lint'
 Plugin 'tpope/vim-unimpaired' " [b for prev buffer
 Plugin 'tpope/vim-surround' " cs{[ to change surrounding {} to []
+Plugin 'tpope/vim-repeat' " make Plugin actions repeatable
 Plugin 'tpope/vim-commentary' " gc to comment in visual mode
 Plugin 'nelstrom/vim-visual-star-search' " * to select all occurences under cursor
 Plugin 'wesQ3/vim-windowswap' " <leader>ww to swap windows
@@ -188,21 +189,27 @@ let g:fuzzy_ignore = "*.png;*.PNG;*.JPG;*.jpg;*.GIF;*.gif;"
 " 
 
 " Set Syntastic checkers 
-let g:syntastic_sass_checkers = ['sass_lint']
-let g:syntastic_scss_checkers = ['scss_lint']
-let g:syntastic_haml_checkers = ['haml_lint']
-" let g:syntastic_javascript_checkers = ['eslint']
-" let g:syntastic_javascript_checkers = ['jshint']
+set statusline+=%#warningmsg#
+set statusline+=%{SyntasticStatuslineFlag()}
+set statusline+=%*
+
+let g:syntastic_always_populate_loc_list = 1
+let g:syntastic_auto_loc_list = 1
 let g:syntastic_check_on_open = 1
+let g:syntastic_check_on_wq = 0
+let g:syntastic_sass_checkers=["sass_lint"]
+let g:syntastic_scss_checkers=["sass_lint"]
+let g:syntastic_haml_checkers = ['haml_lint']
+let g:syntastic_javascript_checkers = ['eslint', 'jshint']
 highlight SyntasticErrorSign guifg=white guibg=red
 highlight SyntasticWarningSign guifg=white guibg=red
-highlight SyntasticErrorLine guibg=#2f0000
-let g:syntastic_error_symbol='✗'
-let g:syntastic_warning_symbol='⚠'
-let g:syntastic_style_error_symbol = '✗'
-let g:syntastic_style_warning_symbol = '⚠'
-" let g:syntastic_style_warning_symbol = "*"
-" let g:syntastic_warning_symbol = "*"
+" highlight SyntasticErrorLine guibg=#2f0000
+" let g:syntastic_error_symbol='✗'
+" let g:syntastic_warning_symbol='⚠'
+" let g:syntastic_style_error_symbol = '✗'
+" let g:syntastic_style_warning_symbol = '⚠'
+let g:syntastic_style_warning_symbol = "*"
+let g:syntastic_warning_symbol = "*"
 let g:syntastic_html_tidy_ignore_errors=['proprietary attribute "ng-']
 
 " HTML tag indentation settings 
