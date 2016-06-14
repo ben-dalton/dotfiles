@@ -164,3 +164,5 @@ export PATH=$PATH:/Users/bendalton/android/platform-tools
 export PATH=$PATH:/Applications/Postgres.app/Contents/Versions/latest/bin
 
 eval $(dinghy shellinit)
+
+eval "$(hub alias -s)"
