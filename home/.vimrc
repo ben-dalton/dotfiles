@@ -28,9 +28,12 @@ Plugin 'marciomazza/vim-brogrammer-theme'
 
 Plugin 'mattn/emmet-vim'
 Plugin 'kien/ctrlp.vim'
+
 Plugin 'cakebaker/scss-syntax.vim'
 Plugin 'scrooloose/syntastic'
 Plugin 'gcorne/vim-sass-lint'
+Plugin 'editorconfig/editorconfig-vim'
+
 Plugin 'tpope/vim-unimpaired' " [b for prev buffer
 Plugin 'tpope/vim-surround' " cs{[ to change surrounding {} to []
 Plugin 'tpope/vim-repeat' " make Plugin actions repeatable
@@ -200,7 +203,7 @@ let g:syntastic_check_on_wq = 0
 let g:syntastic_sass_checkers=["sass_lint"]
 let g:syntastic_scss_checkers=["sass_lint"]
 let g:syntastic_haml_checkers = ['haml_lint']
-let g:syntastic_javascript_checkers = ['eslint', 'jshint']
+let g:syntastic_javascript_checkers = ['eslint']
 highlight SyntasticErrorSign guifg=white guibg=red
 highlight SyntasticWarningSign guifg=white guibg=red
 " highlight SyntasticErrorLine guibg=#2f0000
@@ -211,6 +214,8 @@ highlight SyntasticWarningSign guifg=white guibg=red
 let g:syntastic_style_warning_symbol = "*"
 let g:syntastic_warning_symbol = "*"
 let g:syntastic_html_tidy_ignore_errors=['proprietary attribute "ng-']
+
+let g:EditorConfig_exclude_patterns = ['fugitive://.*', 'scp://.*']
 
 " HTML tag indentation settings 
 " Make HTML get indented on the correct tags
@@ -262,6 +267,8 @@ autocmd FileType html,vimrc,scss,css,js,erb,haml,sass,jsx autocmd BufWritePre <b
 
 " Syntax highlighting with Solarized 
 " (requires correct presets for iTerm2/Terminal too:  http://blog.pangyanhan.com/posts/2013-12-13-vim-install-solarized-on-mac-os-x.html)
+set colorcolumn=80
+set noeol
 syntax enable
 set background=dark
 " colorscheme solarized
