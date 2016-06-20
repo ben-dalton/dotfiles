@@ -23,28 +23,29 @@ Bundle 'lfilho/cosco.vim'
 " Plugin 'the31k/vim-colors-tayra'
 " Plugin 'Lokaltog/vim-distinguished'
 " Plugin 'michalbachowski/vim-wombat256mod'
-Plugin 'nanotech/jellybeans.vim'
+" Plugin 'nanotech/jellybeans.vim'
 Plugin 'marciomazza/vim-brogrammer-theme'
 
-Plugin 'mattn/emmet-vim'
-Plugin 'kien/ctrlp.vim'
+Plugin 'mattn/emmet-vim' " expand with ctrl-y
+Plugin 'kien/ctrlp.vim' " Find files with ctrl-p
 
 Plugin 'cakebaker/scss-syntax.vim'
 Plugin 'scrooloose/syntastic'
-Plugin 'gcorne/vim-sass-lint'
+Plugin 'gcorne/vim-sass-lint' " requires .sass-lint.yml file in root of project
 Plugin 'editorconfig/editorconfig-vim'
 
 Plugin 'tpope/vim-unimpaired' " [b for prev buffer
 Plugin 'tpope/vim-surround' " cs{[ to change surrounding {} to []
 Plugin 'tpope/vim-repeat' " make Plugin actions repeatable
 Plugin 'tpope/vim-commentary' " gc to comment in visual mode
-Plugin 'nelstrom/vim-visual-star-search' " * to select all occurences under cursor
+Plugin 'nelstrom/vim-visual-star-search' " * to select all words under cursor
 Plugin 'wesQ3/vim-windowswap' " <leader>ww to swap windows
 Plugin 'moll/vim-bbye'
 Plugin 'gorodinskiy/vim-coloresque' " highlight hex colors
-Bundle 'mohitleo9/vim-fidget'
+Plugin 'mohitleo9/vim-fidget' " js fiddle set up
 Plugin 'airblade/vim-gitgutter'
-Plugin 'rhysd/committia.vim'
+Plugin 'tpope/vim-fugitive' " git wrapper for vim
+Plugin 'rhysd/committia.vim' " nice git commit layout
 
 Bundle 'ervandew/supertab'
 Plugin 'Valloric/YouCompleteMe'
@@ -125,6 +126,7 @@ vmap <C-Down> ]egv
 imap kj <ESC>
 imap jk <ESC>
 vmap kj <ESC>
+vmap jk <ESC>
 "
 
 " Define what a keyword break is 
@@ -181,15 +183,14 @@ set nobackup
 autocmd Filetype haml setlocal cursorcolumn
 autocmd Filetype sass setlocal cursorcolumn
 
-" Hightlight spaces and tabs 
+" Highlight spaces and tabs 
 " Highlight redundant whitespaces and tabs. Only shows trailing whitespace :)
-highlight RedundantSpaces ctermbg=red
+highlight RedundantSpaces ctermbg=darkGray
 match RedundantSpaces /\s\+$/
 
 " Fuzzy finder ignore files 
 " Fuzzy finder: ignore stuff that can't be opened, and generated files
 let g:fuzzy_ignore = "*.png;*.PNG;*.JPG;*.jpg;*.GIF;*.gif;"
-" 
 
 " Set Syntastic checkers 
 set statusline+=%#warningmsg#
@@ -240,7 +241,7 @@ if !exists('g:airline_symbols')
 	let g:airline_symbols = {}
 endif
 
-let g:airline_theme="jellybeans"
+let g:airline_theme="simple"
 let g:airline#extensions#tabline#enabled = 1 "enable the tabline
 let g:airline#extensions#tabline#fnamemod = ':t' " show just the filename of buffers in the tab line
 let g:airline_detect_modified=1
@@ -265,9 +266,7 @@ endfunction
 "autocmd BufWritePre *.vimrc *.html *.scss *.js :call TrimWhiteSpace()
 autocmd FileType html,vimrc,scss,css,js,erb,haml,sass,jsx autocmd BufWritePre <buffer> :call TrimWhiteSpace()
 
-" Syntax highlighting with Solarized 
-" (requires correct presets for iTerm2/Terminal too:  http://blog.pangyanhan.com/posts/2013-12-13-vim-install-solarized-on-mac-os-x.html)
-set colorcolumn=80
+execute "set colorcolumn=" . join(range(81,335), ',')
 set noeol
 syntax enable
 set background=dark
@@ -292,18 +291,12 @@ set number
 set norelativenumber
 set ruler
 set cursorline
-"set showbreak=2026
 set laststatus=2 " Enable the status bar to always show
-"au BufRead,BufNewFile *.scss set filetype=css " Set extra filetypes
 au BufRead,BufNewFile *.md set filetype=markdown " Set extra filetypes
 set hidden " Set hidden to allow buffers to be browsed
-" filetype indent on
-" set smartindent
 set breakindent " Make word wrapping behave like it does in every other sane text editor
 set hlsearch " Highlight search results
 set incsearch " Make search jump:
-" Amazing custom search command. Thansk to Ingo: http://stackoverflow.com/a/24818933/1147859
-" command -nargs=+ Se execute 'vimgrep /' . [<f-args>][0] . '/ **/*.' . [<f-args>][1]
 set gdefault " assume the /g flag on :s substitutions to replace all matches in a line
 set autoread " Make Vim automatically open changed files (e.g. changed after a Git commit)
 au FocusGained,BufEnter * :silent! !
