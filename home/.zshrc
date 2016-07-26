@@ -72,7 +72,7 @@ alias nib='
 	--rm \
 	-v $(pwd):$(pwd) \
 	-w $(pwd) \
-	-v $HOME/.docker/config.json:/root/.docker/config.json:ro \
+	-v $HOME/.docker/:/root/.docker/:ro \
 	-v /var/run/docker.sock:/var/run/docker.sock \
 	-e "DOCKER_HOST_URL=$DOCKER_HOST" \
 		 technekes/nib'
@@ -162,7 +162,5 @@ eval "$(rbenv init -)"
 
 export PATH=$PATH:/Users/bendalton/android/platform-tools
 export PATH=$PATH:/Applications/Postgres.app/Contents/Versions/latest/bin
-
-eval $(dinghy shellinit)
 
 eval "$(hub alias -s)"
