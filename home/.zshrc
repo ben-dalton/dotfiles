@@ -20,62 +20,62 @@ alias cppath="pwd|pbcopy"
 alias git=hub
 
 function buildOneEmail() { 
-	bundle exec middleman build --glob \"${1}\" --no-clean
-	echo Done building...
-	echo Replacing symbols...
-	replace_symbols
-	echo Done.
+bundle exec middleman build --glob \"${1}\" --no-clean
+echo Done building...
+echo Replacing symbols...
+replace_symbols
+echo Done.
 }
 
 function addS3Creds() { 
-	ln -s ~/.s3_sync .s3_sync
+ln -s ~/.s3_sync .s3_sync
 }
 
 # Phoenix production ui
 function phxprod() { 
-	cd /Users/bendalton/Projects/gordian/RSMeansProcurement/RSMPWebUI/RSMP.Web
-	tab "cd '$PWD' && vim ."
-	open -a "/Applications/Cisco/Cisco AnyConnect Secure Mobility Client.app"
-	open -a "/Applications/Google Chrome.app" "http://localhost:8080"
-	gulp webserver
+cd /Users/bendalton/Projects/gordian/RSMeansProcurement/RSMPWebUI/RSMP.Web
+tab "cd '$PWD' && vim ."
+open -a "/Applications/Cisco/Cisco AnyConnect Secure Mobility Client.app"
+open -a "/Applications/Google Chrome.app" "http://localhost:8080"
+gulp webserver
 }
 
 # Start working on project Phoenix
 function phxproto() {
-  port=${1:="4567"}
-	location="/Users/bendalton/Projects/gordian/RSM-UXUI"
-	cd $location
-	mmedit $port
+port=${1:="4567"}
+location="/Users/bendalton/Projects/gordian/RSM-UXUI"
+cd $location
+mmedit $port
 }
 
 function mmedit() {
-	port=${1:="4567"}
-	tab "cd '$PWD' && vim ."
-	open -a "/Applications/Google Chrome.app" "http://127.0.0.1:$port/__middleman/sitemap/"
-	bundle exec middleman -p=$port
+port=${1:="4567"}
+tab "cd '$PWD' && vim ."
+open -a "/Applications/Google Chrome.app" "http://127.0.0.1:$port/__middleman/sitemap/"
+bundle exec middleman -p=$port
 }
 
 function build-emails() {
-  bundle exec middleman build && find ./build/ -type f -exec sed -i '' -e 's/®/\&reg;/g ; s/©/\&copy;/g ; s/%20/ /g ; s/%7B/\{/g ; s/%7D/\}/g ; s/%7C\*/\|\*/g ; s/*%7C/\*\|/g ; s/™/\&trade;/g' {} \;
+bundle exec middleman build && find ./build/ -type f -exec sed -i '' -e 's/®/\&reg;/g ; s/©/\&copy;/g ; s/%20/ /g ; s/%7B/\{/g ; s/%7D/\}/g ; s/%7C\*/\|\*/g ; s/*%7C/\*\|/g ; s/™/\&trade;/g' {} \;
 }
 
 function replace_symbols() {
-  find ./build/ -type f -exec sed -i '' -e 's/®/\&reg;/g ; s/©/\&copy;/g ; s/%20/ /g     ; s/%7B/\{/g ; s/%7D/\}/g ; s/%7C\*/\|\*/g ; s/*%7C/\*\|/g ; s/™/\&trade;/g' {} \;
+find ./build/ -type f -exec sed -i '' -e 's/®/\&reg;/g ; s/©/\&copy;/g ; s/%20/ /g     ; s/%7B/\{/g ; s/%7D/\}/g ; s/%7C\*/\|\*/g ; s/*%7C/\*\|/g ; s/™/\&trade;/g' {} \;
 }
 
 export LC_CTYPE=C
 export LANG=C
 
 alias nib='
- docker run \
-	-it \
-	--rm \
-	-v $(pwd):$(pwd) \
-	-w $(pwd) \
-	-v $HOME/.docker/:/root/.docker/:ro \
-	-v /var/run/docker.sock:/var/run/docker.sock \
-	-e "DOCKER_HOST_URL=$DOCKER_HOST" \
-		 technekes/nib'
+docker run \
+  -it \
+  --rm \
+  -v $(pwd):$(pwd) \
+  -w $(pwd) \
+  -v $HOME/.docker/:/root/.docker/:ro \
+  -v /var/run/docker.sock:/var/run/docker.sock \
+  -e "DOCKER_HOST_URL=$DOCKER_HOST" \
+  technekes/nib'
 
 # for devbox
 export DEV_BOX=$HOME/Projects/devbox
@@ -87,37 +87,37 @@ alias apps="cd $DEV_BOX/apps"
 alias gems="cd $DEV_BOX/gems"
 
 function run_command_on_devbox() {
-  ssh -p 2222 -i ~/.vagrant.d/insecure_private_key vagrant@localhost "source ~/.bash_profile; $1"
+ssh -p 2222 -i ~/.vagrant.d/insecure_private_key vagrant@localhost "source ~/.bash_profile; $1"
 }
 
 function restart_app() {
-  run_command_on_devbox "restart_app $1"
+run_command_on_devbox "restart_app $1"
 }
 
 function bundle_app() {
-  run_command_on_devbox "cd /var/apps/$1_app; bundle; restart_app $1"
+run_command_on_devbox "cd /var/apps/$1_app; bundle; restart_app $1"
 }
 
 function new-react-starter() { 
-	if [[ $1 ]]; then
-		echo "Copying ReactReduxStarter into $1"
-		cp -r ~/Projects/ReactReduxStarter/ $1
-		cd $1
-		read \?"Is there a repo named $1 in your github account? [Enter] to continue."
-		echo "Replacing pointers to repo."
-		git remote set-url origin git@github.com:ben-dalton/$1.git
-		echo "Pushing initial commit"
-		git push -u origin master
-		open -a "/Applications/Google Chrome.app" "https://github.com/ben-dalton/$1"
-		echo "Installing dependencies"
-		npm install
-		open -a "/Applications/Google Chrome.app" "http://127.0.0.1:8080/webpack-dev-server/"
-		tab "cd '$PWD' && vim ."
-		echo "Starting webpack webserver"
-		npm start
-	else
-		echo "Please give me a name. Also, be sure to add a repo with the same name to your github account."
-	fi
+if [[ $1 ]]; then
+  echo "Copying ReactReduxStarter into $1"
+  cp -r ~/Projects/ReactReduxStarter/ $1
+  cd $1
+  read \?"Is there a repo named $1 in your github account? [Enter] to continue."
+  echo "Replacing pointers to repo."
+  git remote set-url origin git@github.com:ben-dalton/$1.git
+  echo "Pushing initial commit"
+  git push -u origin master
+  open -a "/Applications/Google Chrome.app" "https://github.com/ben-dalton/$1"
+  echo "Installing dependencies"
+  npm install
+  open -a "/Applications/Google Chrome.app" "http://127.0.0.1:8080/webpack-dev-server/"
+  tab "cd '$PWD' && vim ."
+  echo "Starting webpack webserver"
+  npm start
+else
+  echo "Please give me a name. Also, be sure to add a repo with the same name to your github account."
+fi
 }
 
 # Set to this to use case-sensitive completion
