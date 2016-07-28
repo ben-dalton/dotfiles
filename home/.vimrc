@@ -137,11 +137,9 @@ vmap <C-Up> [egv
 vmap <C-Down> ]egv
 " Bubble multiple lines
 
-" Let that pinky rest
-imap kj <ESC>
-imap jk <ESC>
-vmap kj <ESC>
-vmap jk <ESC>
+" " Let that pinky rest
+imap hh <ESC>
+vmap hh <ESC>
 
 " Define what a keyword break is 
 setl iskeyword=@,48-57,192-255,%,#
@@ -346,8 +344,8 @@ set statusline+=%#warningmsg#
 set statusline+=%{SyntasticStatuslineFlag()}
 set statusline+=%*
 
-let g:syntastic_always_populate_loc_list = 1
-let g:syntastic_auto_loc_list = 1
+let g:syntastic_always_populate_loc_list = 0
+let g:syntastic_auto_loc_list = 0
 let g:syntastic_check_on_open = 1
 let g:syntastic_check_on_wq = 0
 let g:syntastic_sass_checkers=["sass_lint"]
@@ -355,14 +353,18 @@ let g:syntastic_scss_checkers=["sass_lint"]
 let g:syntastic_haml_checkers = ['haml_lint']
 let g:syntastic_javascript_checkers = ['eslint']
 let g:syntastic_ruby_checkers = ['rubocop']
-highlight SyntasticErrorSign guifg=white
-highlight SyntasticWarningSign guifg=white
-let g:syntastic_enable_highlighting=0 " stop the weird highlighting
+highlight SyntasticErrorSign guifg=#af0000 guibg=#ffffff
+highlight SyntasticWarningSign guifg=#878700 guibg=#ffffff
+let g:syntastic_enable_highlighting = 0 " stop the weird highlighting
 " let g:syntastic_error_symbol='✗'
+let g:syntastic_error_symbol='X'
 " let g:syntastic_warning_symbol='⚠'
+let g:syntastic_warning_symbol='*'
 " let g:syntastic_style_error_symbol = '✗'
+let g:syntastic_style_error_symbol = 'X'
 " let g:syntastic_style_warning_symbol = '⚠'
-let g:syntastic_style_warning_symbol = "*"
-let g:syntastic_warning_symbol = "*"
+let g:syntastic_style_warning_symbol = '*'
 let g:syntastic_html_tidy_ignore_errors=['proprietary attribute "ng-']
+let g:syntastic_aggregate_errors = 0
+
 let g:EditorConfig_exclude_patterns = ['fugitive://.*', 'scp://.*']
