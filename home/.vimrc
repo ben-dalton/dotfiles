@@ -70,10 +70,6 @@ set background=dark
 " colorscheme distinguished
 " colorscheme jellybeans
 colorscheme brogrammer
-" hi Normal ctermbg=none
-" hi NonText ctermbg=none
-" hi CursorLine ctermbg=0
-" hi LineNr ctermfg=darkGray ctermbg=0
 
 filetype plugin indent on    " required
 
@@ -287,18 +283,19 @@ nnoremap <leader>s :mksession!<CR>
 
 " Allow CTRL+O to create a blank line above in Command mode
 map <C-o> m`O<ESC> 
-" Prevent Paste loosing the register source:
+
+" Prevent Paste losing the register source:
 " http://stackoverflow.com/a/7797434/1147859
 xnoremap p pgvy 
+
+" And allow paste in visual to not update register 
+vnoremap p "_dP
 
 " Windows management shortcuts 
 nmap <C-j> <C-w>j
 nmap <C-k> <C-w>k
 nmap <C-h> <C-w>h
 nmap <C-L> <C-w>l
-
-" And allow paste in visual to not update register 
-vnoremap p "_dP
 
 " Turn off highlighted search with <space> 
 map <Space> :noh<cr>

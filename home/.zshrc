@@ -19,6 +19,8 @@ alias mmbs="bundle exec middleman build && bundle exec middleman s3_sync"
 alias cppath="pwd|pbcopy"
 alias git=hub
 
+alias edit="docker run -ti --rm -v $(pwd):/home/developer/workspace vim"
+
 function buildOneEmail() { 
 bundle exec middleman build --glob \"${1}\" --no-clean
 echo Done building...
