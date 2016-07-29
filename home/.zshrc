@@ -8,7 +8,7 @@ ZSH=$HOME/.oh-my-zsh
 ZSH_THEME="honukai"
 
 # Example aliases
-alias zshconfig="vim ~/.zshrc"
+alias editzsh="vim ~/.zshrc"
 alias ohmyzsh="vim ~/.oh-my-zsh"
 alias reloadzsh=". ~/.zshrc"
 
@@ -19,7 +19,17 @@ alias mmbs="bundle exec middleman build && bundle exec middleman s3_sync"
 alias cppath="pwd|pbcopy"
 alias git=hub
 
-alias edit="docker run -ti --rm -v $(pwd):/home/developer/workspace vim"
+# runs vim in a docker container
+function edit() { 
+  WORKDIR=/workdir
+  if [[ $# == 1  ]]; then
+    FILENAME=$(basename $1)
+    ABSFILE=$( cd $(dirname $1); pwd)/$FILENAME
+    docker run -v $ABSFILE:$WORKDIR/$FILENAME -i -t vim:latest $WORKDIR/$FILENAME
+  else
+    echo "$0 expects exactly one file argument"
+  fi
+}
 
 function buildOneEmail() { 
 bundle exec middleman build --glob \"${1}\" --no-clean
