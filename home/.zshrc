@@ -6,8 +6,14 @@ ZSH=$HOME/.oh-my-zsh
 # Optionally, if you set this to "random", it'll load a random theme each
 # time that oh-my-zsh is loaded.
 ZSH_THEME="honukai"
+# jbergantine
+# honukai
+# garyblessington
+# steeef
+# frisk
+# daveweaver
+# norm
 
-# Example aliases
 alias editzsh="vim ~/.zshrc"
 alias ohmyzsh="vim ~/.oh-my-zsh"
 alias reloadzsh=". ~/.zshrc"
@@ -18,6 +24,7 @@ alias mmb="bundle exec middleman build"
 alias mmbs="bundle exec middleman build && bundle exec middleman s3_sync"
 alias cppath="pwd|pbcopy"
 alias git=hub
+alias readlink=greadlink
 
 # runs vim in a docker container
 function edit() { 
@@ -32,47 +39,47 @@ function edit() {
 }
 
 function buildOneEmail() { 
-bundle exec middleman build --glob \"${1}\" --no-clean
-echo Done building...
-echo Replacing symbols...
-replace_symbols
-echo Done.
+  bundle exec middleman build --glob \"${1}\" --no-clean
+  echo Done building...
+  echo Replacing symbols...
+  replace_symbols
+  echo Done.
 }
 
 function addS3Creds() { 
-ln -s ~/.s3_sync .s3_sync
+  ln -s ~/.s3_sync .s3_sync
 }
 
 # Phoenix production ui
 function phxprod() { 
-cd /Users/bendalton/Projects/gordian/RSMeansProcurement/RSMPWebUI/RSMP.Web
-tab "cd '$PWD' && vim ."
-open -a "/Applications/Cisco/Cisco AnyConnect Secure Mobility Client.app"
-open -a "/Applications/Google Chrome.app" "http://localhost:8080"
-gulp webserver
+  cd /Users/bendalton/Projects/gordian/RSMeansProcurement/RSMPWebUI/RSMP.Web
+  tab "cd '$PWD' && vim ."
+  open -a "/Applications/Cisco/Cisco AnyConnect Secure Mobility Client.app"
+  open -a "/Applications/Google Chrome.app" "http://localhost:8080"
+  gulp webserver
 }
 
 # Start working on project Phoenix
 function phxproto() {
-port=${1:="4567"}
-location="/Users/bendalton/Projects/gordian/RSM-UXUI"
-cd $location
-mmedit $port
+  port=${1:="4567"}
+  location="/Users/bendalton/Projects/gordian/RSM-UXUI"
+  cd $location
+  mmedit $port
 }
 
 function mmedit() {
-port=${1:="4567"}
-tab "cd '$PWD' && vim ."
-open -a "/Applications/Google Chrome.app" "http://127.0.0.1:$port/__middleman/sitemap/"
-bundle exec middleman -p=$port
+  port=${1:="4567"}
+  vsplit_tab "cd '$PWD' && vim ."
+  open -a "/Applications/Google Chrome.app" "http://127.0.0.1:$port/__middleman/sitemap/"
+  bundle exec middleman -p=$port
 }
 
 function build-emails() {
-bundle exec middleman build && find ./build/ -type f -exec sed -i '' -e 's/®/\&reg;/g ; s/©/\&copy;/g ; s/%20/ /g ; s/%7B/\{/g ; s/%7D/\}/g ; s/%7C\*/\|\*/g ; s/*%7C/\*\|/g ; s/™/\&trade;/g' {} \;
+  bundle exec middleman build && find ./build/ -type f -exec sed -i '' -e 's/®/\&reg;/g ; s/©/\&copy;/g ; s/%20/ /g ; s/%7B/\{/g ; s/%7D/\}/g ; s/%7C\*/\|\*/g ; s/*%7C/\*\|/g ; s/™/\&trade;/g' {} \;
 }
 
 function replace_symbols() {
-find ./build/ -type f -exec sed -i '' -e 's/®/\&reg;/g ; s/©/\&copy;/g ; s/%20/ /g     ; s/%7B/\{/g ; s/%7D/\}/g ; s/%7C\*/\|\*/g ; s/*%7C/\*\|/g ; s/™/\&trade;/g' {} \;
+  find ./build/ -type f -exec sed -i '' -e 's/®/\&reg;/g ; s/©/\&copy;/g ; s/%20/ /g     ; s/%7B/\{/g ; s/%7D/\}/g ; s/%7C\*/\|\*/g ; s/*%7C/\*\|/g ; s/™/\&trade;/g' {} \;
 }
 
 export LC_CTYPE=C
@@ -163,6 +170,8 @@ COMPLETION_WAITING_DOTS="true"
 # Example format: plugins=(rails git textmate ruby lighthouse)
 plugins=(osx git bundler chucknorris colorize cp npm)
 
+source $HOME/aws_keys.zsh
+
 source $ZSH/oh-my-zsh.sh
 
 # Customize to your needs...
@@ -175,4 +184,9 @@ eval "$(rbenv init -)"
 export PATH=$PATH:/Users/bendalton/android/platform-tools
 export PATH=$PATH:/Applications/Postgres.app/Contents/Versions/latest/bin
 
+BASE16_SHELL=$HOME/.config/base16-shell/
+[ -n "$PS1" ] && [ -s $BASE16_SHELL/profile_helper.sh ] && eval "$($BASE16_SHELL/profile_helper.sh)"
+# base16_eighties
+
 eval "$(hub alias -s)"
+export PATH="/usr/local/sbin:$PATH"
