@@ -1,59 +1,5 @@
 set nocompatible              " be improved, required
 runtime include/bundles.vim
-" "Vundle settings
-" filetype off                  " required
-" " set the runtime path to include Vundle and initialize
-" set rtp+=~/.vim/bundle/Vundle.vim
-" call vundle#begin()
-" " alternatively, pass a path where Vundle should install plugins
-" " call vundle#begin('~/some/path/here')
-" " let Vundle manage Vundle, required
-" Plugin 'gmarik/Vundle.vim'
-" Plugin 'scrooloose/nerdtree'
-" Plugin 'vim-airline/vim-airline'
-" Plugin 'vim-airline/vim-airline-themes'
-" Plugin 'Lokaltog/vim-easymotion'
-" Plugin 'Raimondi/delimitMate'
-" Plugin 'ternjs/tern_for_vim'
-" Bundle 'lfilho/cosco.vim'
-" " Color Schemes
-" " Plugin 'altercation/vim-colors-solarized'
-" " Plugin 'w0ng/vim-hybrid'
-" " Plugin 'the31k/vim-colors-tayra'
-" " Plugin 'Lokaltog/vim-distinguished'
-" " Plugin 'michalbachowski/vim-wombat256mod'
-" " Plugin 'nanotech/jellybeans.vim'
-" Plugin 'marciomazza/vim-brogrammer-theme'
-" Plugin 'mattn/emmet-vim' " expand with ctrl-y ,
-" Plugin 'kien/ctrlp.vim' " Find files with ctrl-p
-" Plugin 'cakebaker/scss-syntax.vim'
-" Plugin 'scrooloose/syntastic'
-" " Plugin 'gcorne/vim-sass-lint' " requires .sass-lint.yml file in root of project
-" Plugin 'vim-ruby/vim-ruby'
-" Plugin 'tpope/vim-rails'
-" Plugin 'tpope/vim-unimpaired' " [b for prev buffer
-" Plugin 'tpope/vim-surround' " cs{[ to change surrounding {} to []
-" Plugin 'tpope/vim-repeat' " make Plugin actions repeatable
-" Plugin 'tpope/vim-commentary' " gc to comment in visual mode
-" Plugin 'nelstrom/vim-visual-star-search' " * to select all words under cursor
-" Plugin 'wesQ3/vim-windowswap' " <leader>ww to swap windows
-" Plugin 'moll/vim-bbye'
-" Plugin 'gorodinskiy/vim-coloresque' " highlight hex colors
-" Plugin 'mohitleo9/vim-fidget' " js fiddle set up
-" Plugin 'airblade/vim-gitgutter'
-" Plugin 'tpope/vim-fugitive' " git wrapper for vim
-" Plugin 'rhysd/committia.vim' " nice git commit layout
-" Bundle 'ervandew/supertab'
-" Plugin 'Valloric/YouCompleteMe'
-" Plugin 'SirVer/ultisnips'
-" " Snippets are separated from the engine. Add this if you want them:
-" Plugin 'honza/vim-snippets'
-" Plugin 'pangloss/vim-javascript'
-" Plugin 'mxw/vim-jsx'
-" Bundle "justinj/vim-react-snippets"
-" Plugin 'moll/vim-node' " gf to open imported/required js file
-" " All of your Plugins must be added before the following line
-" call vundle#end()            " required
 
 set background=dark
 " colorscheme solarized
@@ -63,7 +9,14 @@ set background=dark
 " colorscheme hybrid
 " colorscheme distinguished
 " colorscheme jellybeans
-colorscheme brogrammer
+" colorscheme brogrammer
+colorscheme base16-eighties
+
+let base16colorspace=256
+if filereadable(expand("~/.vimrc_background"))
+  let base16colorspace=256
+  source ~/.vimrc_background
+endif
 
 filetype plugin indent on    " required
 
@@ -113,8 +66,27 @@ if has("multi_byte")
   set fileencodings=ucs-bom,utf-8,latin1
 endif
 
+let g:partial_templates_roots = ['source', 'src']
+let g:partial_use_splits      = 1
+let g:partial_vertical_split  = 1
+
 " allow html syntax highlighting in js files
-let javascript_enable_domhtmlcss = 1
+let javascript_enable_domhtmlcss = 0
+
+" typescript-vim settings
+let g:typescript_compiler_binary = 'tsc'
+let g:typescript_compiler_options = ''
+autocmd QuickFixCmdPost [^l]* nested cwindow
+autocmd QuickFixCmdPost    l* nested lwindow
+
+" vim-js-pretty-template settings
+autocmd FileType typescript JsPreTmpl html
+
+" ycm for ts
+if !exists("g:ycm_semantic_triggers")
+ let g:ycm_semantic_triggers = {}
+ endif
+ let g:ycm_semantic_triggers['typescript'] = ['.']
 
 " use JSX syntax highlighting in all js files
 let g:jsx_ext_required = 0
@@ -123,13 +95,12 @@ let g:jsx_ext_required = 0
 " Bubble single lines
 nmap <C-Up> [e
 nmap <C-Down> ]e
+" Bubble multiple lines
 vmap <C-Up> [egv
 vmap <C-Down> ]egv
-" Bubble multiple lines
 
 " " Let that pinky rest
 imap hh <ESC>
-vmap hh <ESC>
 
 " Define what a keyword break is 
 setl iskeyword=@,48-57,192-255,%,#
@@ -224,8 +195,9 @@ autocmd VimEnter * call AirlineInit()
 " Enable Nerdtree with CTRL + N
 map <C-n> :NERDTreeToggle<CR>
 
-
+" abyss after 80 cols
 execute "set colorcolumn=" . join(range(81,335), ',')
+
 syntax enable
 
 " Standard Vim settings 
@@ -314,7 +286,6 @@ let g:delimitMate_expand_space = 1
 set nocompatible              " be improved, required
 
 set list                          " Show invisible characters
-
 set listchars=""                  " Reset the listchars
 set listchars=tab:\ \             " a tab should display as "  ", trailing whitespace as "."
 set listchars+=trail:.            " show trailing spaces as dots
@@ -343,6 +314,13 @@ let g:syntastic_sass_checkers=["sass_lint"]
 let g:syntastic_scss_checkers=["sass_lint"]
 let g:syntastic_haml_checkers = ['haml_lint']
 let g:syntastic_javascript_checkers = ['eslint']
+set statusline+=%#warningmsg#
+set statusline+=%{SyntasticStatuslineFlag()}
+set statusline+=%*
+let g:syntastic_check_on_open = 1
+let g:syntastic_check_on_wq = 0
+let g:tsuquyomi_disable_quickfix = 1
+let g:syntastic_typescript_checkers = ['tsuquyomi']
 let g:syntastic_ruby_checkers = ['rubocop']
 highlight SyntasticErrorSign guifg=#af0000 guibg=#ffffff
 highlight SyntasticWarningSign guifg=#878700 guibg=#ffffff
@@ -355,7 +333,13 @@ let g:syntastic_warning_symbol='*'
 let g:syntastic_style_error_symbol = 'X'
 " let g:syntastic_style_warning_symbol = '⚠'
 let g:syntastic_style_warning_symbol = '*'
-let g:syntastic_html_tidy_ignore_errors=['proprietary attribute "ng-']
+let g:syntastic_html_tidy_ignore_errors=['proprietary attribute "ng-', 'is not recognized!', 'discarding unexpected', 'attribute name', 'attribute "#']
 let g:syntastic_aggregate_errors = 0
 
 let g:EditorConfig_exclude_patterns = ['fugitive://.*', 'scp://.*']
+" Change cursor when in insert mode
+let &t_SI = "\<Esc>]50;CursorShape=1\x7"
+let &t_SR = "\<Esc>]50;CursorShape=2\x7"
+let &t_EI = "\<Esc>]50;CursorShape=0\x7"
+
+highlight ColorColumn ctermbg=18 guibg=#000087
