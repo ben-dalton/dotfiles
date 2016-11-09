@@ -10,13 +10,13 @@ set background=dark
 " colorscheme distinguished
 " colorscheme jellybeans
 " colorscheme brogrammer
-colorscheme base16-eighties
+colorscheme base16-tomorrow-night
 
 let base16colorspace=256
-if filereadable(expand("~/.vimrc_background"))
-  let base16colorspace=256
-  source ~/.vimrc_background
-endif
+" if filereadable(expand("~/.vimrc_background"))
+"   let base16colorspace=256
+"   source ~/.vimrc_background
+" endif
 
 filetype plugin indent on    " required
 
@@ -149,8 +149,9 @@ set noswapfile
 set nobackup
 
 " Highlight current column for haml and sass
-autocmd Filetype haml setlocal cursorcolumn
-autocmd Filetype sass setlocal cursorcolumn
+" set cursorcolumn
+" autocmd Filetype haml setlocal cursorcolumn
+" autocmd Filetype sass setlocal cursorcolumn
 
 " Fuzzy finder ignore files 
 " Fuzzy finder: ignore stuff that can't be opened, and generated files
@@ -197,6 +198,7 @@ map <C-n> :NERDTreeToggle<CR>
 
 " abyss after 80 cols
 execute "set colorcolumn=" . join(range(81,335), ',')
+" set colorcolumn=80
 
 syntax enable
 
@@ -299,7 +301,7 @@ function! TrimWhiteSpace()
   %s/\s\+$//e
 endfunction
 
-autocmd FileType haml,js,scss,css,ruby,jsx,html,sass autocmd BufWritePre <buffer> :call TrimWhiteSpace()
+autocmd BufWritePre <buffer> :call TrimWhiteSpace()
 
 " Set Syntastic checkers 
 set statusline+=%#warningmsg#
@@ -322,8 +324,8 @@ let g:syntastic_check_on_wq = 0
 let g:tsuquyomi_disable_quickfix = 1
 let g:syntastic_typescript_checkers = ['tsuquyomi']
 let g:syntastic_ruby_checkers = ['rubocop']
-highlight SyntasticErrorSign guifg=#af0000 guibg=#ffffff
-highlight SyntasticWarningSign guifg=#878700 guibg=#ffffff
+highlight SyntasticErrorSign ctermbg=234 guifg=#af0000 guibg=#ffffff
+highlight SyntasticWarningSign ctermbg=234 guifg=#878700 guibg=#ffffff
 let g:syntastic_enable_highlighting = 0 " stop the weird highlighting
 " let g:syntastic_error_symbol='✗'
 let g:syntastic_error_symbol='X'
@@ -342,4 +344,18 @@ let &t_SI = "\<Esc>]50;CursorShape=1\x7"
 let &t_SR = "\<Esc>]50;CursorShape=2\x7"
 let &t_EI = "\<Esc>]50;CursorShape=0\x7"
 
-highlight ColorColumn ctermbg=18 guibg=#000087
+highlight ColorColumn ctermbg=234
+" hi cursorcolumn ctermbg=234
+hi cursorline ctermbg=234
+hi LineNr ctermbg=234
+hi CursorLineNr ctermbg=234
+hi Search ctermbg=36 ctermfg=white
+let g:mta_use_matchparen_group=0
+let g:mta_set_default_matchtag_color=0
+hi MatchTag ctermfg=white ctermbg=233
+
+let g:indent_guides_auto_colors = 0
+autocmd VimEnter,Colorscheme * :hi IndentGuidesOdd ctermbg=234
+autocmd VimEnter,Colorscheme * :hi IndentGuidesEven ctermbg=233
+let g:indent_guides_enable_on_vim_startup = 1
+

@@ -60,6 +60,7 @@ Plugin 'Shougo/vimproc.vim', {'do' : 'make'}
 Bundle "justinj/vim-react-snippets"
 Plugin 'moll/vim-node' " gf to open imported/required js file
 Plugin 'Valloric/MatchTagAlways'
+Plugin 'nathanaelkane/vim-indent-guides'
 
 " All of your Plugins must be added before the following line
 call vundle#end()            " required
