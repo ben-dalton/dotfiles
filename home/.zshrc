@@ -25,6 +25,22 @@ alias mmbs="bundle exec middleman build && bundle exec middleman s3_sync"
 alias cppath="pwd|pbcopy"
 alias git=hub
 alias readlink=greadlink
+alias tree="tree -C -A"
+
+# # print tree view of directory - optional argument of directory
+# function tree() {
+#   if [ ${1} ];then;
+#     # show everything if specific
+#     find $1 -print | sed -e 's;[^/]*/;|____;g;s;____|; |;g';
+#   else
+#     # exclude these dirs
+#     find . -path "**/node_modules/*" -o \
+#            -path "**/.git/*" -o         \
+#            -path "**/tmp/*"             \
+#            -prune -o -print |           \
+#            sed -e 's;[^/]*/;|____;g;s;____|; |;g';
+#   fi
+# }
 
 # runs vim in a docker container
 function edit() { 
