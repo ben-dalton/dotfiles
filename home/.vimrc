@@ -195,6 +195,7 @@ autocmd VimEnter * call AirlineInit()
 " NERDtree settings 
 " Enable Nerdtree with CTRL + N
 map <C-n> :NERDTreeToggle<CR>
+let NERDTreeShowHidden=1
 
 " abyss after 80 cols
 execute "set colorcolumn=" . join(range(81,335), ',')
@@ -355,7 +356,7 @@ let g:mta_set_default_matchtag_color=0
 hi MatchTag ctermfg=white ctermbg=233
 
 let g:indent_guides_auto_colors = 0
-autocmd VimEnter,Colorscheme * :hi IndentGuidesOdd ctermbg=234
-autocmd VimEnter,Colorscheme * :hi IndentGuidesEven ctermbg=233
+" autocmd VimEnter,Colorscheme * :hi IndentGuidesOdd ctermbg=234
+autocmd VimEnter,Colorscheme * :hi IndentGuidesEven ctermbg=235
 let g:indent_guides_enable_on_vim_startup = 1
 
