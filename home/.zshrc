@@ -25,6 +25,7 @@ alias mmbs="bundle exec middleman build && bundle exec middleman s3_sync"
 alias cppath="pwd|pbcopy"
 alias git=hub
 alias readlink=greadlink
+alias dotfiles="homesick cd dotfiles"
 alias tree="tree -C -A"
 
 # # print tree view of directory - optional argument of directory
