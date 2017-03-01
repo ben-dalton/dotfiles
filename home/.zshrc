@@ -44,7 +44,7 @@ alias tree="tree -C -A"
 # }
 
 # runs vim in a docker container
-function edit() { 
+function edit() {
   WORKDIR=/workdir
   if [[ $# == 1  ]]; then
     FILENAME=$(basename $1)
@@ -55,7 +55,7 @@ function edit() {
   fi
 }
 
-function buildOneEmail() { 
+function buildOneEmail() {
   bundle exec middleman build --glob \"${1}\" --no-clean
   echo Done building...
   echo Replacing symbols...
@@ -63,12 +63,12 @@ function buildOneEmail() {
   echo Done.
 }
 
-function addS3Creds() { 
+function addS3Creds() {
   ln -s ~/.s3_sync .s3_sync
 }
 
 # Phoenix production ui
-function phxprod() { 
+function phxprod() {
   cd /Users/bendalton/Projects/gordian/RSMeansProcurement/RSMPWebUI/RSMP.Web
   tab "cd '$PWD' && vim ."
   open -a "/Applications/Cisco/Cisco AnyConnect Secure Mobility Client.app"
@@ -134,7 +134,7 @@ function bundle_app() {
 run_command_on_devbox "cd /var/apps/$1_app; bundle; restart_app $1"
 }
 
-function new-react-starter() { 
+function new-react-starter() {
 if [[ $1 ]]; then
   echo "Copying ReactReduxStarter into $1"
   cp -r ~/Projects/ReactReduxStarter/ $1
@@ -207,3 +207,8 @@ BASE16_SHELL=$HOME/.config/base16-shell/
 
 eval "$(hub alias -s)"
 export PATH="/usr/local/sbin:$PATH"
+eval $(dinghy shellinit)
+eval  export DOCKER_HOST=tcp://192.168.99.100:2376
+      export DOCKER_CERT_PATH=/Users/bendalton/.docker/machine/machines/dinghy
+      export DOCKER_TLS_VERIFY=1
+      export DOCKER_MACHINE_NAME=dinghy
