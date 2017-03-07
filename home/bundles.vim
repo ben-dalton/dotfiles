@@ -12,6 +12,7 @@ Plugin 'Lokaltog/vim-easymotion'
 Plugin 'Raimondi/delimitMate'
 Plugin 'ternjs/tern_for_vim'
 Bundle 'lfilho/cosco.vim'
+Plugin 'mileszs/ack.vim'
 
 Plugin 'chriskempson/base16-vim'
 " Color Schemes
