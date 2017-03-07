@@ -251,7 +251,7 @@ nnoremap <leader>ev :vsp $MYVIMRC<CR>
 nnoremap <leader>s :mksession!<CR> 
 
 " Allow CTRL+O to create a blank line above in Command mode
-map <C-o> m`O<ESC> 
+" map <C-o> m`O<ESC> 
 
 " Prevent Paste losing the register source:
 " http://stackoverflow.com/a/7797434/1147859
