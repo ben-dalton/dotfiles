@@ -5,7 +5,7 @@ ZSH=$HOME/.oh-my-zsh
 # Look in ~/.oh-my-zsh/themes/
 # Optionally, if you set this to "random", it'll load a random theme each
 # time that oh-my-zsh is loaded.
-ZSH_THEME="honukai"
+ZSH_THEME="garyblessington"
 # jbergantine
 # honukai
 # garyblessington
@@ -23,10 +23,13 @@ alias mm="bundle exec middleman"
 alias mmb="bundle exec middleman build"
 alias mmbs="bundle exec middleman build && bundle exec middleman s3_sync"
 alias cppath="pwd|pbcopy"
-alias git=hub
+# alias git=hub
 alias readlink=greadlink
 alias dotfiles="homesick cd dotfiles"
 alias tree="tree -C -A"
+alias clean-build="npm run clean && npm run build"
+alias rake='noglob rake'
+alias gnuke="git branch | grep -v '^*' | xargs git branch -D"
 
 # # print tree view of directory - optional argument of directory
 # function tree() {
@@ -102,60 +105,6 @@ function replace_symbols() {
 export LC_CTYPE=C
 export LANG=C
 
-alias nib='
-docker run \
-  -it \
-  --rm \
-  -v $(pwd):$(pwd) \
-  -w $(pwd) \
-  -v $HOME/.docker/:/root/.docker/:ro \
-  -v /var/run/docker.sock:/var/run/docker.sock \
-  -e "DOCKER_HOST_URL=$DOCKER_HOST" \
-  technekes/nib'
-
-# for devbox
-export DEV_BOX=$HOME/Projects/devbox
-
-alias vup="cd $DEV_BOX;vagrant up --provision;"
-alias vhalt="cd $DEV_BOX; vagrant halt;"
-alias vssh="cd $DEV_BOX; vagrant ssh;"
-alias apps="cd $DEV_BOX/apps"
-alias gems="cd $DEV_BOX/gems"
-
-function run_command_on_devbox() {
-ssh -p 2222 -i ~/.vagrant.d/insecure_private_key vagrant@localhost "source ~/.bash_profile; $1"
-}
-
-function restart_app() {
-run_command_on_devbox "restart_app $1"
-}
-
-function bundle_app() {
-run_command_on_devbox "cd /var/apps/$1_app; bundle; restart_app $1"
-}
-
-function new-react-starter() {
-if [[ $1 ]]; then
-  echo "Copying ReactReduxStarter into $1"
-  cp -r ~/Projects/ReactReduxStarter/ $1
-  cd $1
-  read \?"Is there a repo named $1 in your github account? [Enter] to continue."
-  echo "Replacing pointers to repo."
-  git remote set-url origin git@github.com:ben-dalton/$1.git
-  echo "Pushing initial commit"
-  git push -u origin master
-  open -a "/Applications/Google Chrome.app" "https://github.com/ben-dalton/$1"
-  echo "Installing dependencies"
-  npm install
-  open -a "/Applications/Google Chrome.app" "http://127.0.0.1:8080/webpack-dev-server/"
-  tab "cd '$PWD' && vim ."
-  echo "Starting webpack webserver"
-  npm start
-else
-  echo "Please give me a name. Also, be sure to add a repo with the same name to your github account."
-fi
-}
-
 # Set to this to use case-sensitive completion
 # CASE_SENSITIVE="true"
 
@@ -185,7 +134,7 @@ COMPLETION_WAITING_DOTS="true"
 # Which plugins would you like to load? (plugins can be found in ~/.oh-my-zsh/plugins/*)
 # Custom plugins may be added to ~/.oh-my-zsh/custom/plugins/
 # Example format: plugins=(rails git textmate ruby lighthouse)
-plugins=(osx git bundler chucknorris colorize cp npm)
+plugins=(osx git bundler cp npm rake)
 
 source $HOME/aws_keys.zsh
 
@@ -211,10 +160,26 @@ fe() {
   [[ -n "$files" ]] && ${EDITOR:-vim} "${files[@]}"
 }
 
-eval "$(hub alias -s)"
+function dockercleancontainers() {
+  if [[ -n "${1}" ]]; then
+    docker rm $(docker ps -aq -f name="${1}")
+  else
+    # find exited containers that are not labeled “data” and remove them
+    docker rm $(
+    comm -13 \
+      <(docker ps -aq -f status=exited -f label=data | sort) \
+      <(docker ps -aq -f status=exited | sort)
+    )
+  fi
+}
+
+# eval "$(hub alias -s)"
 export PATH="/usr/local/sbin:$PATH"
-eval $(dinghy shellinit)
-eval  export DOCKER_HOST=tcp://192.168.99.100:2376
-      export DOCKER_CERT_PATH=/Users/bendalton/.docker/machine/machines/dinghy
-      export DOCKER_TLS_VERIFY=1
-      export DOCKER_MACHINE_NAME=dinghy
+# eval $(dinghy shellinit)
+# eval  export DOCKER_HOST=tcp://192.168.99.100:2376
+#       export DOCKER_CERT_PATH=/Users/bendalton/.docker/machine/machines/dinghy
+#
+#       export DOCKER_TLS_VERIFY=1
+#       export DOCKER_MACHINE_NAME=dinghy
+
+export PATH="$HOME/.yarn/bin:$HOME/.config/yarn/global/node_modules/.bin:$PATH"

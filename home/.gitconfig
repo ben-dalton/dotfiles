@@ -1,8 +1,8 @@
 [user]
-	name = ben-dalton
-	email = benadalton@gmail.com
+	name = 'ben-dalton'
+	email = 'benadalton@gmail.com'
 [push]
-	default = simple
+	default = current
 [credential]
 	helper = cache --timeout=3600
 [diff]
@@ -11,7 +11,17 @@
 	tool = vimdiff
 [core]
 	pager = less -F -X
+	excludesfile = /Users/bendalton/.gitignore_global
 [alias]
 	lg = log --color --graph --pretty=format:'%Cred%h%Creset -%C(yellow)%d%Creset %s %Cgreen(%cr) %C(bold blue)<%an>%Creset' --abbrev-commit
   au = update-index --assume-unchanged
   nau = update-index --no-assume-unchanged
+	pushf = push --force-with-lease
+[difftool "sourcetree"]
+	cmd = opendiff \"$LOCAL\" \"$REMOTE\"
+	path =
+[mergetool "sourcetree"]
+	cmd = /Applications/SourceTree.app/Contents/Resources/opendiff-w.sh \"$LOCAL\" \"$REMOTE\" -ancestor \"$BASE\" -merge \"$MERGED\"
+	trustExitCode = true
+[commit]
+	template = /Users/bendalton/.stCommitMsg

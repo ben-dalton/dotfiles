@@ -29,9 +29,13 @@ Plugin 'kien/ctrlp.vim' " Find files with ctrl-p
 
 Plugin 'cakebaker/scss-syntax.vim'
 Plugin 'scrooloose/syntastic'
+" Plugin 'w0rp/ale'
 Plugin 'gcorne/vim-sass-lint' " requires .sass-lint.yml file in root of project
 Plugin 'vim-ruby/vim-ruby'
 Plugin 'tpope/vim-rails'
+Plugin 'digitaltoad/vim-pug'
+
+Plugin 'prettier/vim-prettier', { 'do': 'yarn install' }
 
 Plugin 'tpope/vim-unimpaired' " [b for prev buffer
 Plugin 'tpope/vim-surround' " cs{[ to change surrounding {} to []

@@ -55,7 +55,7 @@ endfunction
 
 inoremap <return> <C-R>=Ulti_ExpandOrEnter()<CR>
 
-" Character encoding 
+" Character encoding
 if has("multi_byte")
   if &termencoding == ""
     let &termencoding = &encoding
@@ -75,10 +75,14 @@ let javascript_enable_domhtmlcss = 0
 
 " typescript-vim settings
 let g:typescript_compiler_binary = 'tsc'
+let g:syntastic_typescript_checkers = ['tsuquyomi']
 let g:typescript_compiler_options = ''
-autocmd QuickFixCmdPost [^l]* nested cwindow
-autocmd QuickFixCmdPost    l* nested lwindow
-
+" autocmd QuickFixCmdPost [^l]* nested cwindow
+" autocmd QuickFixCmdPost    l* nested lwindow
+set ballooneval
+autocmd FileType typescript nmap <buffer> <Leader>t : <C-u>echo tsuquyomi#hint()<CR>
+autocmd FileType typescript nmap <buffer> <Leader>e <Plug>(TsuquyomiRenameSymbol)
+autocmd FileType typescript nmap <buffer> <Leader>E <Plug>(TsuquyomiRenameSymbolC)
 " vim-js-pretty-template settings
 autocmd FileType typescript JsPreTmpl html
 
@@ -91,7 +95,7 @@ if !exists("g:ycm_semantic_triggers")
 " use JSX syntax highlighting in all js files
 let g:jsx_ext_required = 0
 
-" Line/Selection bubbling 
+" Line/Selection bubbling
 " Bubble single lines
 nmap <C-Up> [e
 nmap <C-Down> ]e
@@ -102,7 +106,7 @@ vmap <C-Down> ]egv
 " " Let that pinky rest
 imap hh <ESC>
 
-" Define what a keyword break is 
+" Define what a keyword break is
 setl iskeyword=@,48-57,192-255,%,#
 
 " Set the leader to comma **** Don't move this as mappings defined before it
@@ -114,7 +118,7 @@ command! CommaOrSemiColon call cosco#commaOrSemiColon()
 autocmd FileType javascript,css,jsx nnoremap <silent> <Leader>; :call cosco#commaOrSemiColon()<CR>
 autocmd FileType javascript,css,jsx inoremap <silent> <Leader>; <c-o>:call cosco#commaOrSemiColon()<CR>
 
-" Set up CTRL P 
+" Set up CTRL P
 " First set up patterns to ignore
 set wildignore+=*/tmp/*,*.so,*/node_modules,*.swp,*.zip     " MacOSX/Linux
 let g:ctrlp_map = '<c-p>'
@@ -131,7 +135,7 @@ nnoremap <C-b> :CtrlPBuffer<CR>
 " Make CTRL+F open Most Recently Used files
 nnoremap <C-f> :CtrlPMRU<CR>
 
-" Emmet controls 
+" Emmet controls
 " let g:user_emmet_install_global = 0 "enable for only HTML and CSS
 " let g:user_emmet_expandabbr_key = '<Tab>'
 " imap <expr> <tab> emmet#expandAbbrIntelligent("\<tab>")
@@ -142,7 +146,7 @@ autocmd FileType jsx,js,html,css,scss,php EmmetInstall
 " ,q to quit
 nnoremap <Leader>q :Bdelete<CR>
 
-" Backup and locations 
+" Backup and locations
 " Set backup file location so swp files aren't saved to Git (make sure you
 " create this folder first!!)
 set noswapfile
@@ -153,15 +157,15 @@ set nobackup
 " autocmd Filetype haml setlocal cursorcolumn
 " autocmd Filetype sass setlocal cursorcolumn
 
-" Fuzzy finder ignore files 
+" Fuzzy finder ignore files
 " Fuzzy finder: ignore stuff that can't be opened, and generated files
 let g:fuzzy_ignore = "*.png;*.PNG;*.JPG;*.jpg;*.GIF;*.gif;"
 
-" HTML tag indentation settings 
+" HTML tag indentation settings
 " Make HTML get indented on the correct tags
 let g:html_indent_inctags = "html,body,head,tbody,table,nav,footer,tr"
 
-" Shortcut to indent whole file 
+" Shortcut to indent whole file
 " indent the whole file and return to original position
 nmap ,= mzgg=G`zz
 
@@ -172,7 +176,7 @@ set t_Co=256
 set fillchars+=stl:\ ,stlnc:\
 set term=xterm-256color
 set termencoding=utf-8
-" Airline 
+" Airline
 " Make sure powerline fonts are used
 let g:airline_powerline_fonts = 1
 if !exists('g:airline_symbols')
@@ -186,24 +190,36 @@ let g:airline_detect_modified=1
 let g:airline#extensions#bufferline#enabled = 1
 let g:airline#extensions#tabline#buffer_nr_show = 1
 
-" Function to show total amount of lines in the airline 
+" Function to show total amount of lines in the airline
 function! AirlineInit()
   let g:airline_section_z = airline#section#create_right(['%L'])
 endfunction
 autocmd VimEnter * call AirlineInit()
 
-" NERDtree settings 
+" NERDtree settings
 " Enable Nerdtree with CTRL + N
 map <C-n> :NERDTreeToggle<CR>
 let NERDTreeShowHidden=1
+let g:NERDTreeWinSize = 45
 
+function! NERDTreeToggleInCurDir()
+  " If NERDTree is open in the current buffer
+  if (exists("t:NERDTreeBufName") && bufwinnr(t:NERDTreeBufName) != -1)
+    exe ":NERDTreeClose"
+  else
+    exe ":NERDTreeFind"
+  endif
+endfunction
+
+" Open NERDTree in the directory of the current file (or /home if no file is open)
+nnoremap <C-n> :call NERDTreeToggleInCurDir()<cr>
 " abyss after 80 cols
-execute "set colorcolumn=" . join(range(81,335), ',')
-" set colorcolumn=80
+" execute "set colorcolumn=" . join(range(81,335), ',')
+set colorcolumn=80
 
 syntax enable
 
-" Standard Vim settings 
+" Standard Vim settings
 set noeol
 set showcmd
 set showmode
@@ -245,42 +261,42 @@ cmap cwd lcd %:p:h
 cmap cd. lcd %:p:h
 
 " " type `,ev` to edit the Vimrc
-nnoremap <leader>ev :vsp $MYVIMRC<CR> 
+nnoremap <leader>ev :vsp $MYVIMRC<CR>
 " " type `,s` to save the buffers etc. Reopen where you were with Vim with `vim
 " " -S`
-nnoremap <leader>s :mksession!<CR> 
+nnoremap <leader>s :mksession!<CR>
 
 " Allow CTRL+O to create a blank line above in Command mode
-" map <C-o> m`O<ESC> 
+" map <C-o> m`O<ESC>
 
 " Prevent Paste losing the register source:
 " http://stackoverflow.com/a/7797434/1147859
-xnoremap p pgvy 
+xnoremap p pgvy
 
-" And allow paste in visual to not update register 
+" And allow paste in visual to not update register
 vnoremap p "_dP
 
-" Windows management shortcuts 
+" Windows management shortcuts
 nmap <C-j> <C-w>j
 nmap <C-k> <C-w>k
 nmap <C-h> <C-w>h
 nmap <C-L> <C-w>l
 
-" Turn off highlighted search with <space> 
+" Turn off highlighted search with <space>
 map <Space> :noh<cr>
 
-"" Remember cursor position 
+"" Remember cursor position
 autocmd BufReadPost * if line("'\"") > 1 && line("'\"") <= line("$") | exe "normal! g`\"" | endif
 
-" Ignore the node_modules folder for searches 
+" Ignore the node_modules folder for searches
 set wildignore+=**/node_modules/**
 
-" Set clipboard 
+" Set clipboard
 if has('unnamedplus')
   set clipboard=unnamedplus
 else
   set clipboard=unnamed
-endif 
+endif
 
 " delimitMate configuration - closing quotes, parens, brackets, etc.
 let g:delimitMate_expand_cr = 1
@@ -297,14 +313,20 @@ set listchars+=extends:>          " The character to show in the last column whe
 set listchars+=precedes:<         " The character to show in the last column when wrap is
 " off and the line continues beyond the right of the screen
 
-" Function to trim trailing whitespace on save 
+" Function to trim trailing whitespace on save
 function! TrimWhiteSpace()
   %s/\s\+$//e
 endfunction
-
 autocmd BufWritePre <buffer> :call TrimWhiteSpace()
 
-" Set Syntastic checkers 
+let g:prettier#quickfix_enabled = 0
+let g:prettier#autoformat = 0
+let g:prettier#config#bracket_spacing = 'true'
+let g:prettier#config#jsx_bracket_same_line = 'true'
+autocmd BufWritePre *.js,*.jsx,*.mjs,*.ts,*.tsx,*.css,*.less,*.scss,*.json,*.graphql,*.md,*.vue Prettier
+
+
+" Set Syntastic checkers
 set statusline+=%#warningmsg#
 set statusline+=%{SyntasticStatuslineFlag()}
 set statusline+=%*
@@ -328,14 +350,14 @@ let g:syntastic_ruby_checkers = ['rubocop']
 highlight SyntasticErrorSign ctermbg=234 guifg=#af0000 guibg=#ffffff
 highlight SyntasticWarningSign ctermbg=234 guifg=#878700 guibg=#ffffff
 let g:syntastic_enable_highlighting = 0 " stop the weird highlighting
-" let g:syntastic_error_symbol='✗'
-let g:syntastic_error_symbol='X'
-" let g:syntastic_warning_symbol='⚠'
-let g:syntastic_warning_symbol='*'
-" let g:syntastic_style_error_symbol = '✗'
-let g:syntastic_style_error_symbol = 'X'
-" let g:syntastic_style_warning_symbol = '⚠'
-let g:syntastic_style_warning_symbol = '*'
+let g:syntastic_error_symbol='✗'
+" let g:syntastic_error_symbol='X'
+let g:syntastic_warning_symbol='⚠'
+" let g:syntastic_warning_symbol='*'
+let g:syntastic_style_error_symbol = '✗'
+" let g:syntastic_style_error_symbol = 'X'
+let g:syntastic_style_warning_symbol = '⚠'
+" let g:syntastic_style_warning_symbol = '*'
 let g:syntastic_html_tidy_ignore_errors=['proprietary attribute "ng-', 'is not recognized!', 'discarding unexpected', 'attribute name', 'attribute "#']
 let g:syntastic_aggregate_errors = 0
 
@@ -350,7 +372,7 @@ highlight ColorColumn ctermbg=234
 hi cursorline ctermbg=234
 hi LineNr ctermbg=234
 hi CursorLineNr ctermbg=234
-hi Search ctermbg=36 ctermfg=white
+hi Search ctermbg=172 ctermfg=white
 let g:mta_use_matchparen_group=0
 let g:mta_set_default_matchtag_color=0
 hi MatchTag ctermfg=white ctermbg=233
