@@ -30,6 +30,23 @@ alias tree="tree -C -A"
 alias clean-build="npm run clean && npm run build"
 alias rake='noglob rake'
 alias gnuke="git branch | grep -v '^*' | xargs git branch -D"
+alias nuw="nib up web"
+alias nsw="nib setup web"
+alias nb="nib build --pull"
+alias npis="npm install --save"
+alias npid="npm install --save-dev"
+alias npig="npm install --global"
+alias npi="npm install"
+alias nbpm="npm run build && packAndMove"
+
+function packAndMove() {
+  DESTINATION=${1:=/Users/bendalton/Desktop}
+  npm pack
+  PACKAGE=$( find *.tgz )
+  mv $PACKAGE $DESTINATION
+  echo "yarn add $DESTINATION/$PACKAGE" | pbcopy
+  echo "\"yarn add $DESTINATION/$PACKAGE\" copied to your clipboard"
+}
 
 # # print tree view of directory - optional argument of directory
 # function tree() {
@@ -136,16 +153,13 @@ COMPLETION_WAITING_DOTS="true"
 # Example format: plugins=(rails git textmate ruby lighthouse)
 plugins=(osx git bundler cp npm rake)
 
-source $HOME/aws_keys.zsh
-
 source $ZSH/oh-my-zsh.sh
+
+source ~/.stoplight/credentials
 
 # Customize to your needs...
 export PATH=$PATH:/usr/bin:/bin:/usr/sbin:/sbin:/usr/local/bin
 
-
-export PATH="$HOME/.rbenv/bin:$PATH"
-eval "$(rbenv init -)"
 
 export PATH=$PATH:/Users/bendalton/android/platform-tools
 export PATH=$PATH:/Applications/Postgres.app/Contents/Versions/latest/bin
@@ -183,3 +197,43 @@ export PATH="/usr/local/sbin:$PATH"
 #       export DOCKER_MACHINE_NAME=dinghy
 
 export PATH="$HOME/.yarn/bin:$HOME/.config/yarn/global/node_modules/.bin:$PATH"
+
+export NVM_DIR="$HOME/.nvm"
+[ -s "$NVM_DIR/nvm.sh" ] && \. "$NVM_DIR/nvm.sh"  # This loads nvm
+[ -s "$NVM_DIR/bash_completion" ] && \. "$NVM_DIR/bash_completion"  # This loads nvm bash_completion
+export NIB_CRYPT_BUCKET_NAME="tk-secrets"
+export PATH="/usr/local/opt/ruby/bin:$PATH"
+export PATH="/usr/local/lib/ruby/gems/2.6.0/bin:$PATH"
+
+
+# Renew MFA Authenticated awscli Credentials
+# Assumptions:
+#   - jq and awscli are installed
+#   - a default profile already exists with valid TKXS AWS credentials (this is used to perform the request for mfa authenticated credentials)
+#   - Username is hardcoded below and may need to be updated for the account you're authenticating with
+#   - either an [mfa] profile doesn't exist yet or one with a key, secret, and session token defined exists. If a profile named [mfa] exists with fewer than 3 values defined below it and it is defined between two other profiles the lower profile will be damaged.
+function awsotp() {
+  if [ $# -ne 1 ]; then
+    echo "Usage: awsotp TOTP-Code"
+  else
+    # Get new credentials
+    credentials=$(aws sts get-session-token --serial-number arn:aws:iam::208979837966:mfa/ben.dalton@technekes.com --token-code "$1")
+    # Make sure that worked
+    if [ $? -ne 0 ]; then
+      echo "There was an issue authenticating your request. Please try again with a new TOTP code or contact your administrator."
+    else
+      # Parse out new credentials
+      aki="$(echo $credentials | jq -r '.Credentials.AccessKeyId')"
+      aks="$(echo $credentials | jq -r '.Credentials.SecretAccessKey')"
+      akt="$(echo $credentials | jq -r '.Credentials.SessionToken')"
+      # Delete the old ones, if no profile named [mfa] exists this is still safe
+      sed -ie '/\[mfa\]/,+3d' ~/.aws/credentials
+      # Add the new credentials
+      echo "[mfa]" >> ~/.aws/credentials
+      echo "aws_access_key_id = ${aki}" >> ~/.aws/credentials
+      echo "aws_secret_access_key= ${aks}" >> ~/.aws/credentials
+      echo "aws_session_token = ${akt}" >> ~/.aws/credentials
+      echo "Done. New credentials available under profile [mfa]."
+    fi
+  fi
+}

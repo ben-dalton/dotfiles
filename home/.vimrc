@@ -1,5 +1,57 @@
-set nocompatible              " be improved, required
-runtime include/bundles.vim
+" Vundle setup
+set nocompatible
+filetype off
+set rtp+=~/.vim/bundle/Vundle.vim
+call vundle#begin()
+
+Plugin 'gmarik/Vundle.vim'
+Plugin 'scrooloose/nerdtree'
+Plugin 'vim-airline/vim-airline'
+Plugin 'vim-airline/vim-airline-themes'
+Plugin 'Lokaltog/vim-easymotion'
+Plugin 'Raimondi/delimitMate'
+Plugin 'ternjs/tern_for_vim'
+Bundle 'lfilho/cosco.vim'
+Plugin 'mileszs/ack.vim'
+
+" Plugin 'chriskempson/base16-vim'
+" Color Schemes
+" Plugin 'altercation/vim-colors-solarized'
+" Plugin 'w0ng/vim-hybrid'
+" Plugin 'the31k/vim-colors-tayra'
+" Plugin 'Lokaltog/vim-distinguished'
+" Plugin 'michalbachowski/vim-wombat256mod'
+" Plugin 'nanotech/jellybeans.vim'
+Plugin 'marciomazza/vim-brogrammer-theme'
+
+Plugin 'mattn/emmet-vim' " expand with ctrl-y ,
+Plugin 'kien/ctrlp.vim' " Find files with ctrl-p
+
+Plugin 'cakebaker/scss-syntax.vim'
+Plugin 'scrooloose/syntastic'
+Plugin 'leafgarland/typescript-vim'
+" Plugin 'w0rp/ale'
+Plugin 'gcorne/vim-sass-lint' " requires .sass-lint.yml file in root of project
+Plugin 'vim-ruby/vim-ruby'
+Plugin 'tpope/vim-rails'
+Plugin 'digitaltoad/vim-pug'
+
+Plugin 'prettier/vim-prettier', { 'do': 'yarn install' }
+
+Plugin 'tpope/vim-unimpaired' " [b for prev buffer
+Plugin 'tpope/vim-surround' " cs{[ to change surrounding {} to []
+Plugin 'tpope/vim-repeat' " make Plugin actions repeatable
+Plugin 'tpope/vim-commentary' " gc to comment in visual mode
+Plugin 'nelstrom/vim-visual-star-search' " * to select all words under cursor
+Plugin 'wesQ3/vim-windowswap' " <leader>ww to swap windows
+Plugin 'moll/vim-bbye'
+Plugin 'mohitleo9/vim-fidget' " js fiddle set up
+Plugin 'airblade/vim-gitgutter'
+Plugin 'tpope/vim-fugitive' " git wrapper for vim
+Plugin 'rhysd/committia.vim' " nice git commit layout
+
+call vundle#end()
+filetype plugin indent on
 
 set background=dark
 " colorscheme solarized
@@ -9,14 +61,14 @@ set background=dark
 " colorscheme hybrid
 " colorscheme distinguished
 " colorscheme jellybeans
-" colorscheme brogrammer
-colorscheme base16-tomorrow-night
+colorscheme brogrammer
+" colorscheme base16-tomorrow-night
 
 let base16colorspace=256
-" if filereadable(expand("~/.vimrc_background"))
-"   let base16colorspace=256
-"   source ~/.vimrc_background
-" endif
+if filereadable(expand("~/.vimrc_background"))
+  let base16colorspace=256
+  source ~/.vimrc_background
+endif
 
 filetype plugin indent on    " required
 
@@ -84,7 +136,7 @@ autocmd FileType typescript nmap <buffer> <Leader>t : <C-u>echo tsuquyomi#hint()
 autocmd FileType typescript nmap <buffer> <Leader>e <Plug>(TsuquyomiRenameSymbol)
 autocmd FileType typescript nmap <buffer> <Leader>E <Plug>(TsuquyomiRenameSymbolC)
 " vim-js-pretty-template settings
-autocmd FileType typescript JsPreTmpl html
+" autocmd FileType typescript JsPreTmpl html
 
 " ycm for ts
 if !exists("g:ycm_semantic_triggers")
@@ -103,8 +155,8 @@ nmap <C-Down> ]e
 vmap <C-Up> [egv
 vmap <C-Down> ]egv
 
-" " Let that pinky rest
-imap hh <ESC>
+" Let that pinky rest
+" imap hh <ESC>
 
 " Define what a keyword break is
 setl iskeyword=@,48-57,192-255,%,#
@@ -147,15 +199,13 @@ autocmd FileType jsx,js,html,css,scss,php EmmetInstall
 nnoremap <Leader>q :Bdelete<CR>
 
 " Backup and locations
-" Set backup file location so swp files aren't saved to Git (make sure you
-" create this folder first!!)
 set noswapfile
 set nobackup
 
 " Highlight current column for haml and sass
 " set cursorcolumn
-" autocmd Filetype haml setlocal cursorcolumn
-" autocmd Filetype sass setlocal cursorcolumn
+autocmd Filetype haml setlocal cursorcolumn
+autocmd Filetype sass setlocal cursorcolumn
 
 " Fuzzy finder ignore files
 " Fuzzy finder: ignore stuff that can't be opened, and generated files
@@ -196,8 +246,7 @@ function! AirlineInit()
 endfunction
 autocmd VimEnter * call AirlineInit()
 
-" NERDtree settings
-" Enable Nerdtree with CTRL + N
+" NERDtree settings " Enable Nerdtree with CTRL + N
 map <C-n> :NERDTreeToggle<CR>
 let NERDTreeShowHidden=1
 let g:NERDTreeWinSize = 45
@@ -214,8 +263,8 @@ endfunction
 " Open NERDTree in the directory of the current file (or /home if no file is open)
 nnoremap <C-n> :call NERDTreeToggleInCurDir()<cr>
 " abyss after 80 cols
-" execute "set colorcolumn=" . join(range(81,335), ',')
-set colorcolumn=80
+execute "set colorcolumn=" . join(range(81,335), ',')
+" set colorcolumn=80
 
 syntax enable
 
@@ -267,7 +316,7 @@ nnoremap <leader>ev :vsp $MYVIMRC<CR>
 nnoremap <leader>s :mksession!<CR>
 
 " Allow CTRL+O to create a blank line above in Command mode
-" map <C-o> m`O<ESC>
+map <C-o> m`O<ESC>
 
 " Prevent Paste losing the register source:
 " http://stackoverflow.com/a/7797434/1147859
