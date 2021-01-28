@@ -40,7 +40,7 @@ alias npi="npm install"
 alias nbpm="npm run build && packAndMove"
 
 function packAndMove() {
-  DESTINATION=${1:=/Users/bendalton/Desktop}
+  DESTINATION=${1:=/Users/ben.dalton/Desktop}
   npm pack
   PACKAGE=$( find *.tgz )
   mv $PACKAGE $DESTINATION
@@ -89,7 +89,7 @@ function addS3Creds() {
 
 # Phoenix production ui
 function phxprod() {
-  cd /Users/bendalton/Projects/gordian/RSMeansProcurement/RSMPWebUI/RSMP.Web
+  cd /Users/ben.dalton/Projects/gordian/RSMeansProcurement/RSMPWebUI/RSMP.Web
   tab "cd '$PWD' && vim ."
   open -a "/Applications/Cisco/Cisco AnyConnect Secure Mobility Client.app"
   open -a "/Applications/Google Chrome.app" "http://localhost:8080"
@@ -99,7 +99,7 @@ function phxprod() {
 # Start working on project Phoenix
 function phxproto() {
   port=${1:="4567"}
-  location="/Users/bendalton/Projects/gordian/RSM-UXUI"
+  location="/Users/ben.dalton/Projects/gordian/RSM-UXUI"
   cd $location
   mmedit $port
 }
@@ -155,13 +155,11 @@ plugins=(osx git bundler cp npm rake)
 
 source $ZSH/oh-my-zsh.sh
 
-source ~/.stoplight/credentials
-
 # Customize to your needs...
 export PATH=$PATH:/usr/bin:/bin:/usr/sbin:/sbin:/usr/local/bin
 
 
-export PATH=$PATH:/Users/bendalton/android/platform-tools
+export PATH=$PATH:/Users/ben.dalton/android/platform-tools
 export PATH=$PATH:/Applications/Postgres.app/Contents/Versions/latest/bin
 
 BASE16_SHELL=$HOME/.config/base16-shell/
@@ -191,7 +189,7 @@ function dockercleancontainers() {
 export PATH="/usr/local/sbin:$PATH"
 # eval $(dinghy shellinit)
 # eval  export DOCKER_HOST=tcp://192.168.99.100:2376
-#       export DOCKER_CERT_PATH=/Users/bendalton/.docker/machine/machines/dinghy
+#       export DOCKER_CERT_PATH=/Users/ben.dalton/.docker/machine/machines/dinghy
 #
 #       export DOCKER_TLS_VERIFY=1
 #       export DOCKER_MACHINE_NAME=dinghy
