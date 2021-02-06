@@ -158,10 +158,6 @@ source $ZSH/oh-my-zsh.sh
 # Customize to your needs...
 export PATH=$PATH:/usr/bin:/bin:/usr/sbin:/sbin:/usr/local/bin
 
-
-export PATH=$PATH:/Users/ben.dalton/android/platform-tools
-export PATH=$PATH:/Applications/Postgres.app/Contents/Versions/latest/bin
-
 BASE16_SHELL=$HOME/.config/base16-shell/
 [ -n "$PS1" ] && [ -s $BASE16_SHELL/profile_helper.sh ] && eval "$($BASE16_SHELL/profile_helper.sh)"
 # base16_eighties
@@ -201,8 +197,8 @@ export NVM_DIR="$HOME/.nvm"
 [ -s "$NVM_DIR/bash_completion" ] && \. "$NVM_DIR/bash_completion"  # This loads nvm bash_completion
 export NIB_CRYPT_BUCKET_NAME="tk-secrets"
 export PATH="/usr/local/opt/ruby/bin:$PATH"
-export PATH="/usr/local/lib/ruby/gems/2.6.0/bin:$PATH"
-
+export PATH="/usr/local/lib/ruby/gems/2.7.2/bin:$PATH"
+eval "$(rbenv init -)"
 
 # Renew MFA Authenticated awscli Credentials
 # Assumptions:
