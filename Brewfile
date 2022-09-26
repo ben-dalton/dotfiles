@@ -1,7 +1,6 @@
 cask_args appdir: '/Applications'
 
 # Taps
-tap 'caskroom/cask'
 tap 'crisidev/homebrew-chunkwm'
 
 # Plugins
