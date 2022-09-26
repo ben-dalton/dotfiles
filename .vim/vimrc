@@ -1,0 +1,429 @@
+scriptencoding utf-8
+
+" Plugged
+source ~/.vim/bundle.vim
+
+" myfiletypes : an augroup for my autocmd
+augroup myfiletypes
+  " Clear old autocmds in group
+  autocmd!
+
+  " autoindent with two spaces, always expand tabs
+  autocmd FileType ruby,eruby,yaml,xml setlocal ai sw=2 sts=2 et
+  autocmd FileType ruby,eruby,yaml,xml setlocal path+=lib
+  " Make ?s part of words
+  autocmd FileType ruby,eruby,yaml setlocal iskeyword+=?
+
+  autocmd BufRead,BufNewFile Dangerfile set filetype=ruby
+  autocmd BufRead,BufNewFile Brewfile set filetype=ruby
+
+  autocmd BufRead,BufNewFile *.md setlocal spell
+  autocmd BufRead,BufNewFile *.md setlocal wrap linebreak nolist
+augroup END
+
+let g:python3_host_prog = "/Library/Frameworks/Python.framework/Versions/3.10/bin/python3"
+
+set nobackup              " do not make backup before saving
+set nowritebackup         " do not write backup before saving
+set history=50            " remember 50 commands
+set ruler                 " show the cursor position all the time
+set showcmd               " display incomplete commands
+set showmode              " show the current mode
+set laststatus=2          " Always display the status line
+set nowrap                " set nowrap
+set t_ti= t_te=           " Prevent Vim from clobbering the scrollback buffer.
+set scrolloff=3           " keep at least three lines visible above/below cursor
+
+set colorcolumn=121       " show a marker at 120th character
+set hlsearch              " Highlight searches
+set incsearch             " do incremental searching
+set ignorecase            " searches are case insensitive...
+set smartcase             " ... unless they contain at least one capital letter
+set gdefault              " have :s///g flag by default on
+
+set synmaxcol=800         " don't try to highlight long lines
+set number                " show line numbers
+set clipboard=unnamedplus " use system clipboard by default!
+
+" https://www.reddit.com/r/neovim/comments/ab01n8/
+let g:clipboard = {
+  \ 'name': 'pbcopy',
+  \ 'copy': {
+  \    '+': 'pbcopy',
+  \    '*': 'pbcopy',
+  \  },
+  \ 'paste': {
+  \    '+': 'pbpaste',
+  \    '*': 'pbpaste',
+  \ },
+  \ 'cache_enabled': 0,
+  \ }
+
+" Allow backgrounding buffers without writing them, and remember marks/undo
+" for backgrounded buffers
+set hidden
+
+" Auto-reload buffers when file changed on disk
+set autoread
+
+" Disable swap files; systems don't crash that often these days
+set updatecount=0
+
+" colors and syntax highlighting
+if (has("termguicolors"))
+ set termguicolors
+endif
+
+syntax on
+syntax enable
+syntax sync fromstart
+
+" set background=dark
+
+source ~/.vim/plugin/status.vim
+
+let g:onedark_termcolors = 256
+let g:onedark_terminal_italics = 1
+colorscheme onedark
+
+" let g:nord_italic = 1
+" let g:nord_italic_comments = 1
+" colorscheme nord
+
+" colorscheme wal
+" hack for hard to read comments, hope I don't regret this!
+" highlight Comment ctermfg=blue
+" colorscheme wpgtk
+
+" colorscheme base16-solarized-light
+
+" Softtabs, 2 spaces
+set tabstop=2
+set shiftwidth=2
+set expandtab
+
+" Scroll the viewport faster
+nnoremap <C-e> 3<C-e>
+nnoremap <C-y> 3<C-y>
+
+" make the tab key match bracket pairs
+nnoremap <tab> %
+vnoremap <tab> %
+
+" use the dot command on visual selections
+vnoremap . :norm.<CR>
+inoremap <tab> <tab>
+
+" Tab bar line
+set showtabline=1                 " show tabline when more than one tab
+
+" Display extra whitespace etc.
+set list listchars=tab:▸\ ,trail:·
+
+" It's easier to press Space than / for searching:
+nnoremap <Space> /
+nnoremap <C-Space> ?
+nnoremap </> /\v
+
+" Get off my lawn
+nnoremap <Left> :echoe "Use h"<CR>
+nnoremap <Right> :echoe "Use l"<CR>
+nnoremap <Up> :echoe "Use k"<CR>
+nnoremap <Down> :echoe "Use j"<CR>
+
+" Make moving up/down work on wrapped lines of text
+nnoremap <silent> j gj
+nnoremap <silent> k gk
+nnoremap <silent> ^ g^
+nnoremap <silent> $ g$
+
+" Disable error bells
+set noerrorbells
+set visualbell
+
+" Allow for spelling tab completion when enabled
+set complete+=kspell
+
+" Spell check and automatic wrapping at 72 columns for commit messages
+autocmd Filetype gitcommit setlocal spell textwidth=72
+
+" force markdown format for all .md files http://goo.gl/2xSiBU
+autocmd BufNewFile,BufReadPost *.md set filetype=markdown
+
+" ================ Persistent Undo ==================
+" Keep undo history across sessions, by storing in file.
+" Only works all the time.
+
+silent !mkdir -p ~/.vim/backups > /dev/null 2>&1
+set undodir=~/.vim/backups
+set undofile
+
+" save on losing focus
+au FocusLost * :wa
+
+" Prettier
+" let g:prettier#autoformat = 1
+" let g:prettier#autoformat_require_pragma = 0
+
+
+
+" Treat <li> and <p> tags like the block tags they are
+let g:html_indent_tags = 'li\|p'
+
+" also use <jk> as to exit insert
+imap jk <Esc>
+
+" <,> is the leader character
+let mapleader = ","
+
+" Open new split panes to right and bottom (dirvish uses this as well)
+set splitbelow
+set splitright
+
+" NETRW
+let g:netrw_banner=0    " do not display info on the top of window
+let g:netrw_altv=1      " open splits to the right
+let g:netrw_liststyle=3 " tree view
+let g:netrw_keepdir = 0 " avoid move files error
+let g:netrw_winsize = 20 " size of split
+let g:netrw_banner = 0   " hide the banner
+let g:netrw_localcopydircmd = 'cp -r' " copy recursively by default
+hi! link netrwMarkFile Search
+nnoremap <C-n> :Lexplore %:p:h<CR>
+nnoremap <C-n> :Lexplore<CR>
+
+" No Help, please
+inoremap <F1> <ESC>
+nnoremap <F1> <ESC>
+vnoremap <F1> <ESC>
+
+" Disable Ex mode
+map Q <Nop>
+
+" Bind :Q to :q etc
+command! Q q
+command! Qall qall
+command! QA qall
+command! E e
+
+" map Pack to minpac
+command! PackUpdate call minpac#update()
+command! PackClean call minpac#clean()
+
+" Pane navigation
+nnoremap <C-J> <C-W><C-J>
+nnoremap <C-K> <C-W><C-K>
+nnoremap <C-H> <C-W><C-H>
+nnoremap <C-L> <C-W><C-L>
+
+" select last paste in visual mode
+nnoremap <expr> gb '`[' . strpart(getregtype(), 0, 1) . '`]'
+
+"Visual mode blockwise indentEdit
+vmap > >gv
+vmap < <gv
+set shiftround " When at 3 spaces and I hit >>, go to 4, not 5
+
+" Quickly hide search highlighting
+" nnoremap <silent> <leader>n :silent :nohlsearch<CR>
+:nnoremap <CR> :nohlsearch<cr>
+
+"folding settings
+set foldmethod=indent   "fold based on indent
+set foldnestmax=10      "deepest fold is 10 levels
+set nofoldenable        "dont fold by default
+set foldlevel=1         "this is just what i use
+
+" Search down into subfolders. Provides tab-completion for all file-related tasks
+set path+=**
+
+" RipGrep
+" open global search with fzf
+nnoremap <leader>f :Rg<CR>
+" global search for word under cursor
+nnoremap <leader>* :Rg <C-R><C-W><CR>
+
+" complete settings
+" set wildmenu
+set wildoptions=pum,tagfile
+
+" add gems.tags to ctags list
+set tags+=gems.tags
+
+" set buffer width to 88 characters
+nnoremap <leader>w :vertical resize 88<cr>
+
+""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
+" SELECT ALL
+" Hit Ctrl+A to select all in current buffer
+""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
+nnoremap <C-a> ggVG
+
+""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
+" MARK DOWN
+" Hit leader+m to preview markdown file in Marked
+""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
+" :nnoremap <leader>m :silent !open -a Marked\ 2.app '%:p' -g<cr>
+" :command! -nargs=0 VMD execute 'silent !vmd % &>/dev/null &' | redraw!
+
+""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
+" MULTIPURPOSE TAB KEY
+" Indent if we're at the beginning of a line. Else, do completion.
+""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
+" function! InsertTabWrapper()
+"     let col = col('.') - 1
+"     if !col || getline('.')[col - 1] !~ '\k'
+"         return "\<tab>"
+"     else
+"         return "\<c-p>"
+"     endif
+" ndfunction
+" inoremap <tab> <c-r>=InsertTabWrapper()<cr>
+" inoremap <s-tab> <c-n>
+
+""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
+" COC
+"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
+
+if isdirectory('./node_modules') && isdirectory('./node_modules/prettier')
+  let g:coc_global_extensions += ['coc-prettier']
+endif
+
+if isdirectory('./node_modules') && isdirectory('./node_modules/eslint')
+  let g:coc_global_extensions += ['coc-eslint']
+endif
+
+" Press Enter to select completion items or expand snippets
+inoremap <silent><expr> <CR>
+  \ pumvisible() ? "\<C-y>" :
+  \ "\<C-g>u\<CR>"
+
+let g:coc_snippet_next = '<Tab>'              " Use Tab to jump to next snippet placeholder
+let g:coc_snippet_prev = '<S-Tab>'            " Use Shift+Tab to jump to previous snippet placeholder
+
+nmap <leader>do <Plug>(coc-codeaction)
+nmap <leader>rn <Plug>(coc-rename)
+
+" COC List Shortcuts
+" show workspace symbols
+nnoremap <silent> <space>s :<C-u>CocList -I symbols<cr>
+" show diagnostics list
+nnoremap <silent> <space>d :<C-u>CocList diagnostics<cr>
+" show type definition
+nmap <silent> gy <Plug>(coc-type-definition)
+" show definition of item under cursor
+nnoremap <silent> K :call CocAction('doHover')<CR>
+" Apply AutoFix to problem on the current line.
+nmap <leader>qf  <Plug>(coc-fix-current)
+" Run the Code Lens action on the current line.
+nmap <leader>cl  <Plug>(coc-codelens-action)
+" Use `[g` and `]g` to navigate diagnostics
+" Use `:CocDiagnostics` to get all diagnostics of current buffer in location list.
+nmap <silent> [g <Plug>(coc-diagnostic-prev)
+nmap <silent> ]g <Plug>(coc-diagnostic-next)
+
+let g:coc_global_extensions = [
+  \ "coc-tsserver",
+  \ "coc-json",
+  \ "coc-css",
+  \ "coc-lists",
+  \ "coc-html",
+  \ "coc-explorer",
+  \ "coc-git",
+  \ "coc-htmlhint",
+  \ "coc-svg",
+  \ "coc-emmet",
+  \ "coc-html-css-support",
+  \ "coc-prettier",
+  \ "coc-eslint",
+  \ "coc-snippets",
+  \ "coc-pairs",
+  \ "coc-jsref",
+  \ "coc-styled-components",
+  \ "coc-highlight",
+  \ "coc-python"
+  \]
+
+""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
+
+set autoindent
+filetype plugin indent on
+
+augroup vimrcEx
+  au!
+
+  " For all text files set 'textwidth' to 78 characters.
+  autocmd FileType text setlocal textwidth=78
+  autocmd FileType asciidoc setlocal textwidth=78
+  autocmd FileType asciidoc setlocal spell
+
+  " When editing a file, always jump to the last known cursor position.
+  " Don't do it when the position is invalid or when inside an event handler
+  " (happens when dropping a file on gvim).
+  autocmd BufReadPost *
+    \ if line("'\"") > 0 && line("'\"") <= line("$") |
+    \   exe "normal g`\"" |
+    \ endif
+augroup END
+
+map <leader>n :call file#Rename()<cr>
+
+""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
+" TEXT EXPANSION
+""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
+abbr clog <esc>ciwconsole.log();<esc>==$hi
+
+" abbr bp binding.pry<ESC>:w<CR>
+
+" create Jira Markdown Link: type a ticket number, space, jt, space
+" abbr jt <esc>xv3bdi[<esc>pa](https://technekes.atlassian.net/browse/<esc>pa)<esc>
+
+""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
+" EDIT IN CURRENT DIRECTORY
+" Edit another file in the same directory as the current file
+" uses expression to extract path from current file's path
+""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
+map <Leader>e :e <C-R>=escape(expand("%:p:h"),' ') . '/'<CR><CR>
+map <Leader>s :split <C-R>=escape(expand("%:p:h"), ' ') . '/'<CR><CR>
+map <Leader>v :vnew <C-R>=escape(expand("%:p:h"), ' ') . '/'<CR><CR>
+
+""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
+" Emacs-like beginning and end of line (insert mode)
+""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
+imap <c-e> <c-o>$
+imap <c-a> <c-o>^
+
+""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
+" Hop Keybindings
+""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
+nnoremap <Leader><Leader>b :HopWordBC<CR>
+nnoremap <Leader><Leader>w :HopWordAC<CR>
+nnoremap <Leader><Leader>j :HopLineAC<CR>
+nnoremap <Leader><Leader>k :HopLineBC<CR>
+
+"-- normal mode (sneak-like)
+nmap <Leader><Leader>f :HopChar2AC<CR>
+nmap <Leader><Leader>F :HopChar2BC<CR>
+
+""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
+" Trailing spaces
+""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
+" delete on buffer write
+augroup spaces
+  autocmd!
+  autocmd BufWritePre * %s/\s\+$//e
+augroup END
+
+""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
+" Remove obsession files on quit
+""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
+augroup autocom
+  autocmd!
+  " executes the command on quit
+  autocmd VimLeave * !rm ./*obsession*
+augroup END
+
+augroup autocom
+  autocmd BufWritePre *.tsx :silent call CocAction('runCommand', 'editor.action.organizeImports')
+augroup END
+
