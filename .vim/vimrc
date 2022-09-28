@@ -82,9 +82,9 @@ syntax sync fromstart
 
 source ~/.vim/plugin/status.vim
 
-let g:onedark_termcolors = 256
-let g:onedark_terminal_italics = 1
-colorscheme onedark
+" let g:onedark_termcolors = 256
+" let g:onedark_terminal_italics = 1
+" colorscheme onedark
 
 " let g:nord_italic = 1
 " let g:nord_italic_comments = 1
@@ -95,7 +95,10 @@ colorscheme onedark
 " highlight Comment ctermfg=blue
 " colorscheme wpgtk
 
-" colorscheme base16-solarized-light
+"colorscheme base16-material-darker
+"colorscheme base16-snazzy
+lua require('colorbuddy').colorscheme('cobalt2')
+
 
 " Softtabs, 2 spaces
 set tabstop=2
@@ -181,16 +184,18 @@ set splitbelow
 set splitright
 
 " NETRW
-let g:netrw_banner=0    " do not display info on the top of window
-let g:netrw_altv=1      " open splits to the right
-let g:netrw_liststyle=3 " tree view
-let g:netrw_keepdir = 0 " avoid move files error
-let g:netrw_winsize = 20 " size of split
-let g:netrw_banner = 0   " hide the banner
-let g:netrw_localcopydircmd = 'cp -r' " copy recursively by default
-hi! link netrwMarkFile Search
-nnoremap <C-n> :Lexplore %:p:h<CR>
-nnoremap <C-n> :Lexplore<CR>
+" let g:netrw_banner=0    " do not display info on the top of window
+" let g:netrw_altv=1      " open splits to the right
+" let g:netrw_liststyle=3 " tree view
+" let g:netrw_keepdir = 0 " avoid move files error
+" let g:netrw_winsize = 20 " size of split
+" let g:netrw_banner = 0   " hide the banner
+" let g:netrw_localcopydircmd = 'cp -r' " copy recursively by default
+" hi! link netrwMarkFile Search
+" nnoremap <C-n> :Lexplore %:p:h<CR>
+" nnoremap <C-n> :Lexplore<CR>
+"
+nnoremap <C-n> :NeoTreeFocusToggle<CR>
 
 " No Help, please
 inoremap <F1> <ESC>
@@ -226,7 +231,7 @@ set shiftround " When at 3 spaces and I hit >>, go to 4, not 5
 
 " Quickly hide search highlighting
 " nnoremap <silent> <leader>n :silent :nohlsearch<CR>
-:nnoremap <CR> :nohlsearch<cr>
+:nnoremap <escape> :nohlsearch<cr>
 
 "folding settings
 set foldmethod=indent   "fold based on indent
@@ -234,14 +239,23 @@ set foldnestmax=10      "deepest fold is 10 levels
 set nofoldenable        "dont fold by default
 set foldlevel=1         "this is just what i use
 
+" Change casing of word under cursor
+nnoremap <leader>cr :<C-u>CaseMasterRotateCase<CR>
+vnoremap <leader>cr :<C-u>CaseMasterRotateCaseVisual<CR>
+nnoremap <leader>cp :<C-u>CaseMasterConvertToPascal<CR>
+nnoremap <leader>cs :<C-u>CaseMasterConvertToSnake<CR>
+nnoremap <leader>ck :<C-u>CaseMasterConvertToKebab<CR>
+nnoremap <leader>cc :<C-u>CaseMasterConvertToCamel<CR>
+nnoremap <leader>cm :<C-u>CaseMasterConvertToMacro<CR>
+
 " Search down into subfolders. Provides tab-completion for all file-related tasks
 set path+=**
 
-" RipGrep
-" open global search with fzf
-nnoremap <leader>f :Rg<CR>
-" global search for word under cursor
-nnoremap <leader>* :Rg <C-R><C-W><CR>
+" Telescope
+nnoremap <leader>ff <cmd>Telescope find_files<cr>
+nnoremap <leader>fg <cmd>Telescope live_grep<cr>
+nnoremap <leader>fb <cmd>Telescope buffers<cr>
+nnoremap <leader>fh <cmd>Telescope help_tags<cr>
 
 " complete settings
 " set wildmenu
@@ -258,13 +272,6 @@ nnoremap <leader>w :vertical resize 88<cr>
 " Hit Ctrl+A to select all in current buffer
 """"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
 nnoremap <C-a> ggVG
-
-""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
-" MARK DOWN
-" Hit leader+m to preview markdown file in Marked
-""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
-" :nnoremap <leader>m :silent !open -a Marked\ 2.app '%:p' -g<cr>
-" :command! -nargs=0 VMD execute 'silent !vmd % &>/dev/null &' | redraw!
 
 """"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
 " MULTIPURPOSE TAB KEY
@@ -285,21 +292,13 @@ nnoremap <C-a> ggVG
 " COC
 """""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
 
-if isdirectory('./node_modules') && isdirectory('./node_modules/prettier')
-  let g:coc_global_extensions += ['coc-prettier']
-endif
-
-if isdirectory('./node_modules') && isdirectory('./node_modules/eslint')
-  let g:coc_global_extensions += ['coc-eslint']
-endif
-
 " Press Enter to select completion items or expand snippets
-inoremap <silent><expr> <CR>
-  \ pumvisible() ? "\<C-y>" :
-  \ "\<C-g>u\<CR>"
+" inoremap <silent><expr> <CR>
+"   \ pumvisible() ? "\<C-y>" :
+"   \ "\<C-g>u\<CR>"
 
-let g:coc_snippet_next = '<Tab>'              " Use Tab to jump to next snippet placeholder
-let g:coc_snippet_prev = '<S-Tab>'            " Use Shift+Tab to jump to previous snippet placeholder
+" let g:coc_snippet_next = '<Tab>'              " Use Tab to jump to next snippet placeholder
+" let g:coc_snippet_prev = '<S-Tab>'            " Use Shift+Tab to jump to previous snippet placeholder
 
 nmap <leader>do <Plug>(coc-codeaction)
 nmap <leader>rn <Plug>(coc-rename)
@@ -324,27 +323,6 @@ nmap <silent> ]g <Plug>(coc-diagnostic-next)
 " Apply AutoFix to problem on the current line.
 nmap <leader>md  :CocCommand markdown-preview-enhanced.openPreview<CR>
 
-let g:coc_global_extensions = [
-  \ "coc-tsserver",
-  \ "coc-json",
-  \ "coc-css",
-  \ "coc-lists",
-  \ "coc-html",
-  \ "coc-explorer",
-  \ "coc-git",
-  \ "coc-htmlhint",
-  \ "coc-svg",
-  \ "coc-emmet",
-  \ "coc-html-css-support",
-  \ "coc-prettier",
-  \ "coc-eslint",
-  \ "coc-snippets",
-  \ "coc-pairs",
-  \ "coc-jsref",
-  \ "coc-styled-components",
-  \ "coc-highlight",
-  \ "coc-python"
-  \]
 
 """"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
 

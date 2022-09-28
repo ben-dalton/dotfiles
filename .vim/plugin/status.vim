@@ -1,26 +1,38 @@
-let g:lightline = {
-  \   'colorscheme': 'nord',
-  \   'active': {
-  \     'left':[ [ 'mode', 'paste' ],
-  \              [ 'cocstatus', 'gitbranch', 'readonly', 'filename', 'modified' ]
-  \     ]
-  \   },
-  \   'component': {
-  \     'lineinfo': ' %3l:%-2v',
-  \   },
-  \   'component_function': {
-  \     'gitbranch': 'fugitive#head',
-  \     'cocstatus': 'coc#status',
-  \   },
-  \   'separator': {
-  \     'left': '', 'right': ''
-  \   },
-  \   'subseparator': {
-  \     'left': '', 'right': ''
-  \   }
-  \ }
+" " ==============================================================================
+" " Light Line
+" " ==============================================================================
+lua << END
+  require('lualine').setup {
+    theme = 'cobalt2'
+  }
+END
 
-autocmd User CocStatusChange,CocDiagnosticChange call lightline#update()
+" " ==============================================================================
+" " Light Line
+" " ==============================================================================
+" let g:lightline = {
+"   \   'colorscheme': 'cobalt2',
+"   \   'active': {
+"   \     'left':[ [ 'mode', 'paste' ],
+"   \              [ 'cocstatus', 'gitbranch', 'readonly', 'filename', 'modified' ]
+"   \     ]
+"   \   },
+"   \   'component': {
+"   \     'lineinfo': ' %3l:%-2v',
+"   \   },
+"   \   'component_function': {
+"   \     'gitbranch': 'fugitive#head',
+"   \     'cocstatus': 'coc#status',
+"   \   },
+"   \   'separator': {
+"   \     'left': '', 'right': ''
+"   \   },
+"   \   'subseparator': {
+"   \     'left': '', 'right': ''
+"   \   }
+"   \ }
+
+" autocmd User CocStatusChange,CocDiagnosticChange call lightline#update()
 
 
 " " ==============================================================================
