@@ -195,7 +195,9 @@ set splitright
 " nnoremap <C-n> :Lexplore %:p:h<CR>
 " nnoremap <C-n> :Lexplore<CR>
 "
+
 nnoremap <C-n> :NeoTreeFocusToggle<CR>
+nnoremap <C-m> :NeoTreeFocusToggle position=right<CR>
 
 " No Help, please
 inoremap <F1> <ESC>
@@ -220,6 +222,7 @@ nnoremap <C-J> <C-W><C-J>
 nnoremap <C-K> <C-W><C-K>
 nnoremap <C-H> <C-W><C-H>
 nnoremap <C-L> <C-W><C-L>
+
 
 " select last paste in visual mode
 nnoremap <expr> gb '`[' . strpart(getregtype(), 0, 1) . '`]'
@@ -264,9 +267,6 @@ set wildoptions=pum,tagfile
 " add gems.tags to ctags list
 set tags+=gems.tags
 
-" set buffer width to 88 characters
-nnoremap <leader>w :vertical resize 88<cr>
-
 """"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
 " SELECT ALL
 " Hit Ctrl+A to select all in current buffer
@@ -300,28 +300,30 @@ nnoremap <C-a> ggVG
 " let g:coc_snippet_next = '<Tab>'              " Use Tab to jump to next snippet placeholder
 " let g:coc_snippet_prev = '<S-Tab>'            " Use Shift+Tab to jump to previous snippet placeholder
 
-nmap <leader>do <Plug>(coc-codeaction)
-nmap <leader>rn <Plug>(coc-rename)
+" nmap <leader>do <Plug>(coc-codeaction)
+" nmap <leader>rn <Plug>(coc-rename)
 
-" COC List Shortcuts
-" show workspace symbols
-nnoremap <silent> <space>s :<C-u>CocList -I symbols<cr>
-" show diagnostics list
-nnoremap <silent> <space>d :<C-u>CocList diagnostics<cr>
-" show type definition
-nmap <silent> gy <Plug>(coc-type-definition)
-" show definition of item under cursor
-nnoremap <silent> K :call CocAction('doHover')<CR>
-" Apply AutoFix to problem on the current line.
-nmap <leader>qf  <Plug>(coc-fix-current)
-" Run the Code Lens action on the current line.
-nmap <leader>cl  <Plug>(coc-codelens-action)
+" " COC List Shortcuts
+" " show workspace symbols
+" nnoremap <silent> <space>s :<C-u>CocList -I symbols<cr>
+" " show diagnostics list
+" nnoremap <silent> <space>d :<C-u>CocList diagnostics<cr>
+" " show type definition
+" nmap <silent> gy <Plug>(coc-type-definition)
+" show type references
+nmap <silent> gr :Telescope lsp_references<CR>
+" " show definition of item under cursor
+" nnoremap <silent> K :call CocAction('doHover')<CR>
+" " Apply AutoFix to problem on the current line.
+" nmap <leader>qf  <Plug>(coc-fix-current)
+" " Run the Code Lens action on the current line.
+" nmap <leader>cl  <Plug>(coc-codelens-action)
 " Use `[g` and `]g` to navigate diagnostics
-" Use `:CocDiagnostics` to get all diagnostics of current buffer in location list.
-nmap <silent> [g <Plug>(coc-diagnostic-prev)
-nmap <silent> ]g <Plug>(coc-diagnostic-next)
-" Apply AutoFix to problem on the current line.
-nmap <leader>md  :CocCommand markdown-preview-enhanced.openPreview<CR>
+" " Use `:CocDiagnostics` to get all diagnostics of current buffer in location list.
+" nmap <silent> [g <Plug>(coc-diagnostic-prev)
+" nmap <silent> ]g <Plug>(coc-diagnostic-next)
+" " Apply AutoFix to problem on the current line.
+" nmap <leader>md  :CocCommand markdown-preview-enhanced.openPreview<CR>
 
 
 """"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
@@ -403,7 +405,7 @@ augroup autocom
   autocmd VimLeave * !rm ./*obsession*
 augroup END
 
-augroup autocom
-  autocmd BufWritePre *.tsx :silent call CocAction('runCommand', 'editor.action.organizeImports')
-augroup END
+" augroup autocom
+"   autocmd BufWritePre *.tsx :silent call CocAction('runCommand', 'editor.action.organizeImports')
+" augroup END
 
