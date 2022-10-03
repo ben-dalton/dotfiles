@@ -46,16 +46,16 @@ nmap <Leader>a=> :Tabularize /=><CR>
 vmap <Leader>a=> :Tabularize /=><CR>
 
 " " vim-dirvish
-augroup dirvish_config
-  autocmd!
-  autocmd FileType dirvish silent! unmap <buffer> <C-p>
-augroup END
+" augroup dirvish_config
+"   autocmd!
+"   autocmd FileType dirvish silent! unmap <buffer> <C-p>
+" augroup END
 
-let g:dirvish_mode = ':sort ,^.*[\/],'
+" let g:dirvish_mode = ':sort ,^.*[\/],'
 
 " " neoterm
 command NewVerticalTerminal :vert Tnew
-nmap <silent> <Leader>r :T all<CR>
+" nmap <silent> <Leader>r :T all<CR>
 
 nnoremap <leader>t :NewVerticalTerminal <CR> <C-W><C-L>
 inoremap <leader>t <Esc>:NewVerticalTerminal <CR> <C-W><C-L>
