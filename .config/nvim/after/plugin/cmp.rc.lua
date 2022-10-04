@@ -1,11 +1,18 @@
 local status, cmp = pcall(require, "cmp")
 if (not status) then return end
-local lspkind = require 'lspkind'
+
+local has_words_before = function()
+  local cursor = vim.api.nvim_win_get_cursor(0)
+  return (vim.api.nvim_buf_get_lines(0, cursor[1] - 1, cursor[1], true)[1] or ''):sub(cursor[2], cursor[2]):match('%s')
+end
+
+local lspkind = require('lspkind')
+local luasnip = require("luasnip")
+require("luasnip.loaders.from_vscode").lazy_load()
 
 cmp.setup({
   snippet = {
     expand = function(args)
-      local luasnip = prequire("luasnip")
       if not luasnip then
         return
       end
@@ -13,6 +20,7 @@ cmp.setup({
     end,
   },
   sources = cmp.config.sources({
+    { name = 'path' },
     { name = 'nvim_lsp' },
     { name = 'buffer' },
     { name = 'luasnip' },
@@ -56,6 +64,7 @@ cmp.setup({
 vim.cmd [[
   set completeopt=menuone,noinsert,noselect
   highlight! default link CmpItemKind CmpItemMenuDefault
-  inoremap <expr> <Tab>   pumvisible() ? "\<C-n>" : "\<Tab>"
-  inoremap <expr> <S-Tab> pumvisible() ? "\<C-p>" : "\<S-Tab>"
 ]]
+
+-- inoremap <expr> <Tab>   pumvisible() ? "\<C-n>" : "\<Tab>"
+-- inoremap <expr> <S-Tab> pumvisible() ? "\<C-p>" : "\<S-Tab>"

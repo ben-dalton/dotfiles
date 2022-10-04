@@ -23,7 +23,7 @@ local on_attach = function(client, bufnr)
   buf_set_keymap('n', 'gd', '<Cmd>lua vim.lsp.buf.definition()<CR>', opts)
   buf_set_keymap('n', 'gi', '<cmd>lua vim.lsp.buf.implementation()<CR>', opts)
   buf_set_keymap('n', 'K', '<Cmd>lua vim.lsp.buf.hover()<CR>', opts)
-  buf_set_keymap('n', 'gt', '<Cmd>lua vim.lsp.buf.type_definition()<CR>', opts)
+  buf_set_keymap('n', 'go', '<Cmd>lua vim.lsp.buf.type_definition()<CR>', opts)
   buf_set_keymap('n', '<leader>rn', 'vim.lsp.buf.rename', opts)
   buf_set_keymap('n', '<leader>ca', 'vim.lsp.buf.code_action', opts)
   buf_set_keymap('n', 'gr', 'vim.lsp.buf.references', opts)
@@ -72,9 +72,9 @@ nvim_lsp.tsserver.setup {
   filetypes = { "typescript", "typescriptreact", "typescript.tsx" },
   cmd = { "typescript-language-server", "--stdio" },
   capabilities = capabilities,
-    go_to_source_definition = {
-        fallback = true, -- fall back to standard LSP definition on failure
-    },
+  go_to_source_definition = {
+    fallback = true, -- fall back to standard LSP definition on failure
+  },
 }
 
 nvim_lsp.sourcekit.setup {

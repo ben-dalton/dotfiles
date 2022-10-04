@@ -49,9 +49,10 @@ packer.startup(function(use)
   use 'glepnir/lspsaga.nvim' -- LSP UIs
   use { 'saadparwaiz1/cmp_luasnip' }
   use {
-    'L3MON4D3/LuaSnip',
-    after = 'nvim-cmp',
-    config = function() require('config.snippets') end,
+    "L3MON4D3/LuaSnip",
+    config = function()
+      require("luasnip").config.setup({ history = true })
+    end,
   }
   use {
     'nvim-treesitter/nvim-treesitter',
