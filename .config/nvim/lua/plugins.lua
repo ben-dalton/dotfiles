@@ -19,13 +19,13 @@ packer.startup(function(use)
   use 'MunifTanjim/nui.nvim'
   use {
     "nvim-neo-tree/neo-tree.nvim", -- file tree
-      branch = "v2.x",
-      requires = {
-        "nvim-lua/plenary.nvim",
-        "kyazdani42/nvim-web-devicons", -- not strictly required, but recommended
-        "MunifTanjim/nui.nvim",
-      }
+    branch = "v2.x",
+    requires = {
+      "nvim-lua/plenary.nvim",
+      "kyazdani42/nvim-web-devicons", -- not strictly required, but recommended
+      "MunifTanjim/nui.nvim",
     }
+  }
   use 'johmsalas/text-case.nvim' -- change string case
   use 'terrortylor/nvim-comment' -- comment toggling
   use 'JoosepAlviste/nvim-ts-context-commentstring' -- the right kind of comment
@@ -46,13 +46,18 @@ packer.startup(function(use)
   use 'williamboman/mason.nvim'
   use 'williamboman/mason-lspconfig.nvim'
   use 'natecraddock/sessions.nvim'
-
   use 'glepnir/lspsaga.nvim' -- LSP UIs
-  use 'L3MON4D3/LuaSnip'
+  use { 'saadparwaiz1/cmp_luasnip' }
+  use {
+    'L3MON4D3/LuaSnip',
+    after = 'nvim-cmp',
+    config = function() require('config.snippets') end,
+  }
   use {
     'nvim-treesitter/nvim-treesitter',
     run = function() require('nvim-treesitter.install').update({ with_sync = true }) end,
   }
+  use "rafamadriz/friendly-snippets"
   use 'kyazdani42/nvim-web-devicons' -- File icons
   use 'nvim-telescope/telescope.nvim'
   use 'nvim-telescope/telescope-file-browser.nvim'
