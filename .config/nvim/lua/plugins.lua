@@ -8,13 +8,9 @@ vim.cmd [[packadd packer.nvim]]
 
 packer.startup(function(use)
   use 'wbthomason/packer.nvim'
-  -- use {
-  --    'svrana/neosolarized.nvim',
-  --   requires = { 'tjdevries/colorbuddy.nvim' }
-  -- }
   use { 'TimUntersberger/neogit', requires = 'nvim-lua/plenary.nvim' }
-  use { "kylechui/nvim-surround" } -- surround visual with something
-  use { 'phaazon/hop.nvim' } -- easy cursor movement
+  use 'kylechui/nvim-surround' -- surround visual with something
+  use 'phaazon/hop.nvim' -- easy cursor movement
   use 'machakann/vim-highlightedyank' -- highlights yanked characters
   use 'MunifTanjim/nui.nvim'
   use {
@@ -47,7 +43,7 @@ packer.startup(function(use)
   use 'williamboman/mason-lspconfig.nvim'
   use 'natecraddock/sessions.nvim'
   use 'glepnir/lspsaga.nvim' -- LSP UIs
-  use { 'saadparwaiz1/cmp_luasnip' }
+  use 'saadparwaiz1/cmp_luasnip'
   use {
     "L3MON4D3/LuaSnip",
     config = function()
@@ -72,7 +68,6 @@ packer.startup(function(use)
   })
   use 'akinsho/nvim-bufferline.lua'
   -- use 'github/copilot.vim'
-
   use 'lewis6991/gitsigns.nvim'
   use 'dinhhuy258/git.nvim' -- For git blame & browse
 end)
