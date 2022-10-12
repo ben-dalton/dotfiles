@@ -36,6 +36,13 @@ vim.opt.wildignore:append { '*/node_modules/*' }
 vim.opt.wrap = true -- wrap lines
 vim.opt.wrapmargin = 5
 vim.opt.writebackup = false
+vim.opt.swapfile = false
+vim.cmd [[
+  execute "set colorcolumn=" . join(range(120,335), ',')
+  highlight ColorColumn ctermbg=0 guibg=DarkGrey
+  highlight OverLength ctermbg=DarkRed ctermfg=white guibg=#592929
+  match OverLength /\%121v.\+/
+]]
 
 -- Turn off paste mode when leaving insert
 vim.api.nvim_create_autocmd('InsertLeave', {

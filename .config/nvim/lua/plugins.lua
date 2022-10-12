@@ -12,6 +12,7 @@ packer.startup(function(use)
   use 'kylechui/nvim-surround' -- surround visual with something
   use 'phaazon/hop.nvim' -- easy cursor movement
   use 'machakann/vim-highlightedyank' -- highlights yanked characters
+  use 'wesQ3/vim-windowswap'
   use 'MunifTanjim/nui.nvim'
   use {
     "nvim-neo-tree/neo-tree.nvim", -- file tree
@@ -43,6 +44,7 @@ packer.startup(function(use)
   use 'williamboman/mason-lspconfig.nvim'
   use 'natecraddock/sessions.nvim'
   use 'glepnir/lspsaga.nvim' -- LSP UIs
+  use 'jparise/vim-graphql'
   use 'saadparwaiz1/cmp_luasnip'
   use {
     "L3MON4D3/LuaSnip",
@@ -54,7 +56,7 @@ packer.startup(function(use)
     'nvim-treesitter/nvim-treesitter',
     run = function() require('nvim-treesitter.install').update({ with_sync = true }) end,
   }
-  use "rafamadriz/friendly-snippets"
+  use 'rafamadriz/friendly-snippets'
   use 'kyazdani42/nvim-web-devicons' -- File icons
   use 'nvim-telescope/telescope.nvim'
   use 'nvim-telescope/telescope-file-browser.nvim'
@@ -67,7 +69,8 @@ packer.startup(function(use)
     run = function() vim.fn["mkdp#util#install"]() end,
   })
   use 'akinsho/nvim-bufferline.lua'
-  -- use 'github/copilot.vim'
   use 'lewis6991/gitsigns.nvim'
   use 'dinhhuy258/git.nvim' -- For git blame & browse
+  use 'renerocksai/calendar-vim'
+  use 'renerocksai/telekasten.nvim'
 end)

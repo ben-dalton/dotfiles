@@ -24,6 +24,8 @@ keymap.set('n', '<leader>tl', ':tablast<cr>', { silent = true })
 -- splits
 keymap.set('n', '<leader>s', ':split<CR>')
 keymap.set('n', '<leader>v', ':vsplit<CR>')
+keymap.set('n', '<leader>S', ':botright split<CR>')
+keymap.set('n', '<leader>V', ':botright vsplit<CR>')
 
 -- move splits
 keymap.set('n', '<leader>wr', '<C-w>r') -- rotate windows downwards/rightwards
