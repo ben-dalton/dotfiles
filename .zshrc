@@ -155,12 +155,14 @@ alias nbpm="npm run build && packAndMove"
 alias yd="yarn dev"
 alias unobsessed="rm *obsession*"
 alias clearvimsession="rm Session.vim"
+alias notes="cd ~/Projects/zettelkasten/"
 
 # Roofstock Aliases
 alias rscli="cd ~/RoofstockGits/roofstock.cli && local-ssl-proxy --config local-https-proxy.json"
 alias rswebapp="cd ~/RoofstockGits/roofstock.webapp/src/Roofstock.Web.NextApp && yarn dev"
 alias rsgis="cd ~/RoofstockGits/roofstock.gisapp/Roofstock.GisApp.NextApp && yarn dev"
 alias gis="cd ~/RoofstockGits/roofstock.gisapp/Roofstock.GisApp.NextApp"
+alias gisdev="~/.config/scripts/gis-app.sh"
 
 function gitup() {
   BRANCH=$(git branch --show-current)
