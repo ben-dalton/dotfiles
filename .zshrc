@@ -78,7 +78,7 @@ ZSH_CUSTOM=~/.config/oh-my-zsh/
 # Custom plugins may be added to $ZSH_CUSTOM/plugins/
 # Example format: plugins=(rails git textmate ruby lighthouse)
 # Add wisely, as too many plugins slow down shell startup.
-plugins=(git fig nvm node macos emoji)
+plugins=(git fig nvm node macos emoji vi-mode)
 
 source $ZSH/oh-my-zsh.sh
 
@@ -127,7 +127,9 @@ function dockercleancontainers() {
   fi
 }
 
-
+# Enable vi mode
+bindkey -v
+VI_MODE_SET_CURSOR=true
 
 # Set personal aliases, overriding those provided by oh-my-zsh libs,
 # plugins, and themes. Aliases can be placed here, though oh-my-zsh
@@ -156,6 +158,8 @@ alias yd="yarn dev"
 alias unobsessed="rm *obsession*"
 alias clearvimsession="rm Session.vim"
 alias notes="cd ~/Projects/zettelkasten/"
+alias weather="curl -s wttr.in/Charlotte\?u"
+alias weather:today="curl -s v2d.wttr.in/Charlotte\?u"
 
 # Roofstock Aliases
 alias rscli="cd ~/RoofstockGits/roofstock.cli && local-ssl-proxy --config local-https-proxy.json"
