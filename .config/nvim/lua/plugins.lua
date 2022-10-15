@@ -30,7 +30,6 @@ packer.startup(function(use)
   use 'rcarriga/nvim-notify'
   use 'hrsh7th/cmp-path'
   use 'hrsh7th/cmp-cmdline'
-  use { 'lalitmee/cobalt2.nvim', requires = 'tjdevries/colorbuddy.nvim' }
   use 'nvim-lualine/lualine.nvim' -- Statusline
   use 'nvim-lua/plenary.nvim' -- Common utilities
   use 'onsails/lspkind-nvim' -- vscode-like pictograms
@@ -73,4 +72,6 @@ packer.startup(function(use)
   use 'dinhhuy258/git.nvim' -- For git blame & browse
   use 'renerocksai/calendar-vim'
   use 'renerocksai/telekasten.nvim'
+  use { 'lalitmee/cobalt2.nvim', requires = 'tjdevries/colorbuddy.nvim' }
+  use 'xiyaowong/nvim-transparent'
 end)
