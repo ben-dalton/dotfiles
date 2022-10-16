@@ -2,6 +2,10 @@ cask_args appdir: '/Applications'
 
 # Taps
 tap 'crisidev/homebrew-chunkwm'
+tap "homebrew/bundle"
+tap "homebrew/cask"
+tap "homebrew/cask-fonts"
+tap "homebrew/core"
 
 # Plugins
 brew 'mas'
@@ -11,17 +15,15 @@ brew 'autojump'
 brew 'bat'
 brew 'catimg'
 brew 'ctags'
-brew 'eslintd'
 brew 'fzf'
 brew 'git'
+brew 'git-credential-manager'
 brew 'htop'
 brew 'imagemagick'
-brew 'iterm2'
 brew 'jesseduffield/lazygit/lazygit'
 brew 'jq'
 brew 'lua-language-server'
 brew 'neovim'
-brew 'prettierd'
 brew 'rbenv'
 brew 'ripgrep'
 brew 'socat'
@@ -40,12 +42,10 @@ cask 'dropbox'
 cask 'fig'
 cask 'font-fira-code'
 cask 'font-hack-nerd-font'
-cask 'git-credential-manager-core'
 cask 'google-chrome'
 cask 'google-drive'
+cask 'iterm2'
 cask 'karabiner-elements'
-cask 'obsidian'
-cask 'syncthing'
 cask 'visual-studio-code'
 
 # Mac App Store Apps
@@ -53,3 +53,14 @@ mas 'bettersnaptool', id: 417375580
 mas 'bitwarden',      id: 1352778147
 mas 'slack',          id: 803453959
 mas 'webcam-setting', id: 1610840452
+
+# not available via Brew
+# Packer
+# git clone --depth 1 https://github.com/wbthomason/packer.nvim\ ~/.local/share/nvim/site/pack/packer/start/packer.nvim
+#
+# Cobalt2 Themes
+# git clone git@github.com:wesbos/Cobalt2-iterm.git ~/.config/cobalt2
+#
+# NPM Global
+# 'prettierd'
+# 'eslintd'
