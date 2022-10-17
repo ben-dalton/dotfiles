@@ -2,6 +2,7 @@ cask_args appdir: '/Applications'
 
 # Taps
 tap 'crisidev/homebrew-chunkwm'
+tap 'fsouza/prettierd'
 tap "homebrew/bundle"
 tap "homebrew/cask"
 tap "homebrew/cask-fonts"
@@ -15,6 +16,7 @@ brew 'autojump'
 brew 'bat'
 brew 'catimg'
 brew 'ctags'
+brew 'fsouza/prettierd/prettierd'
 brew 'fzf'
 brew 'git'
 brew 'git-credential-manager'
@@ -62,5 +64,4 @@ mas 'webcam-setting', id: 1610840452
 # git clone git@github.com:wesbos/Cobalt2-iterm.git ~/.config/cobalt2
 #
 # NPM Global
-# 'prettierd'
-# 'eslintd'
+# npm install -g eslint_d
