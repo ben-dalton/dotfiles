@@ -160,6 +160,7 @@ alias clearvimsession="rm Session.vim"
 alias notes="cd ~/Projects/zettelkasten/"
 alias weather="curl -s wttr.in/Charlotte\?u"
 alias weather:today="curl -s v2d.wttr.in/Charlotte\?u"
+alias ytmd="~/.config/scripts/ytmd_commands.sh"
 
 # Roofstock Aliases
 alias rscli="cd ~/RoofstockGits/roofstock.cli && local-ssl-proxy --config local-https-proxy.json"
