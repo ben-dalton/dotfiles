@@ -44,4 +44,10 @@ vim.api.nvim_create_autocmd('InsertLeave', {
   command = 'set nopaste'
 })
 
+-- set text width for markdown
+vim.api.nvim_create_autocmd(
+  { "BufRead", "BufNewFile" },
+  { pattern = { "*.txt", "*.md" }, command = "setlocal textwidth=80" }
+)
+
 vim.opt.formatoptions:append { ':rcqt' }
