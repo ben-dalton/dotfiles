@@ -28,6 +28,7 @@ then
   tmux send-keys -t 'notes' 'notes && vim .' C-m
   tmux split-window -h -p 20
   tmux send-keys -t 'notes' 'notes && gitwatch ~/Projects/zettelkasten' C-m
+  tmux split-window -p 50
 fi
 
 tmux attach-session -t $SESSION:0
