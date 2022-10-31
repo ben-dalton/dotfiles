@@ -185,14 +185,6 @@ function gitup() {
   git branch --set-upstream-to=origin/$BRANCH $BRANCH
 }
 
-# Roofstock WIP
-# function rungis() {
-#   tmux splitw run:rs-cli
-#   tmux splitw run:rs-webapp
-#   tmux splitw run:rs-gis
-#   open -a "/Applications/Google Chrome.app" "http://localhost:13522"
-# }
-
 eval "$(rbenv init - zsh)"
 
 export NVM_DIR="$HOME/.nvm"
@@ -202,6 +194,8 @@ export NVM_DIR="$HOME/.nvm"
 export PATH="$HOME/.yarn/bin:$HOME/.config/yarn/global/node_modules/.bin:$PATH"
 
 [ -f ~/.fzf.zsh ] && source ~/.fzf.zsh
+
+# use config to handle git actions for dotfiles
 alias config='/usr/bin/git --git-dir=$HOME/.cfg/ --work-tree=$HOME'
 
 # Fig post block. Keep at the bottom of this file.
