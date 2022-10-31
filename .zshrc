@@ -127,6 +127,17 @@ function dockercleancontainers() {
   fi
 }
 
+# pretend "curl cheat.sh" is a cli
+function cheat() {
+  if [[ -n "${2}" ]]; then
+    QUERY="/${2//\ /+}"
+    echo cheat.sh/${1}$QUERY
+    curl cheat.sh/${1}$QUERY
+  else
+    curl cheat.sh/${1}
+  fi
+}
+
 # Enable vi mode
 bindkey -v
 VI_MODE_SET_CURSOR=true
@@ -158,8 +169,8 @@ alias yd="yarn dev"
 alias unobsessed="rm *obsession*"
 alias clearvimsession="rm Session.vim"
 alias notes="cd ~/Projects/zettelkasten/"
-alias weather="curl -s wttr.in/Charlotte\?u"
-alias weather:today="curl -s v2d.wttr.in/Charlotte\?u"
+alias weather="curl -s 'wttr.in/charlote\?u'"
+alias weather:today="curl -s v2d.wttr.in/charlotte\?u"
 alias ytmd="~/.config/scripts/ytmd_commands.sh"
 
 # Roofstock Aliases
