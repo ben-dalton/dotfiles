@@ -74,4 +74,5 @@ packer.startup(function(use)
   use 'renerocksai/telekasten.nvim'
   use { 'lalitmee/cobalt2.nvim', requires = 'tjdevries/colorbuddy.nvim' }
   use 'xiyaowong/nvim-transparent'
+  use({ 'terror/chatgpt.nvim', run = 'pip3 install -r requirements.txt' })
 end)
