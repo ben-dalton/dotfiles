@@ -29,6 +29,15 @@ local on_attach = function(client, bufnr)
   buf_set_keymap('n', 'gr', 'vim.lsp.buf.references', opts)
 end
 
+local function organize_imports()
+  local params = {
+    command = "_typescript.organizeImports",
+    arguments = { vim.api.nvim_buf_get_name(0) },
+    title = ""
+  }
+  vim.lsp.buf.execute_command(params)
+end
+
 protocol.CompletionItemKind = {
   '', -- Text
   '', -- Method
@@ -75,6 +84,12 @@ nvim_lsp.tsserver.setup {
   go_to_source_definition = {
     fallback = true, -- fall back to standard LSP definition on failure
   },
+  commands = {
+    OrganizeImports = {
+      organize_imports,
+      description = "Organize Imports"
+    }
+  }
 }
 
 nvim_lsp.sourcekit.setup {
@@ -114,6 +129,9 @@ for type, icon in pairs(signs) do
   local hl = "DiagnosticSign" .. type
   vim.fn.sign_define(hl, { text = icon, texthl = hl, numhl = "" })
 end
+
+vim.o.updatetime = 250
+vim.cmd [[autocmd! CursorHold,CursorHoldI * lua vim.diagnostic.open_float(nil, {focus=false})]]
 
 vim.diagnostic.config({
   virtual_text = {
