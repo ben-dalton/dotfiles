@@ -93,11 +93,11 @@ export PATH="${PATH}:${HOME}/Library/Python/3.10/bin/"
 # export LANG=en_US.UTF-8
 
 # Preferred editor for local and remote sessions
-# if [[ -n $SSH_CONNECTION ]]; then
-#   export EDITOR='vim'
-# else
-#   export EDITOR='mvim'
-# fi
+if [[ -n $SSH_CONNECTION ]]; then
+  export EDITOR='vim'
+else
+  export EDITOR='nvim'
+fi
 
 # Compilation flags
 # export ARCHFLAGS="-arch x86_64"
@@ -169,15 +169,18 @@ alias yd="yarn dev"
 alias unobsessed="rm *obsession*"
 alias clearvimsession="rm Session.vim"
 alias notes="cd ~/Projects/zettelkasten/"
-alias weather="curl -s 'wttr.in/charlote\?u'"
+alias weather="curl -s 'wttr.in/charlotte\?u'"
 alias weather:today="curl -s v2d.wttr.in/charlotte\?u"
 alias ytmd="~/.config/scripts/ytmd_commands.sh"
+alias mux="tmuxinator"
+alias etmux="cd ~/.config/tmux && vim ."
+alias envim="cd ~/.config/nvim && vim ."
 
 # Roofstock Aliases
 alias rscli="cd ~/RoofstockGits/roofstock.cli && local-ssl-proxy --config local-https-proxy.json"
-alias rswebapp="cd ~/RoofstockGits/roofstock.webapp/src/Roofstock.Web.NextApp && yarn dev"
-alias rsgis="cd ~/RoofstockGits/roofstock.gisapp/Roofstock.GisApp.NextApp && yarn dev"
-alias gis="cd ~/RoofstockGits/roofstock.gisapp/Roofstock.GisApp.NextApp"
+alias rswebapp="cd ~/RoofstockGits/retail-web-app/src/Roofstock.Web.NextApp && yarn dev"
+alias rsgis="cd ~/RoofstockGits/gis-app/Roofstock.GisApp.NextApp && yarn dev"
+alias gis="cd ~/RoofstockGits/gis-app"
 alias gisdev="~/.config/scripts/gis-app.sh"
 
 function gitup() {

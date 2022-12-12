@@ -31,6 +31,7 @@ brew 'rbenv'
 brew 'ripgrep'
 brew 'socat'
 brew 'tmux'
+brew 'tmuxinator'
 brew 'tree'
 brew 'tree-sitter'
 
