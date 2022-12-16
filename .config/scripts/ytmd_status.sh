@@ -10,12 +10,12 @@ then
   ICON='॥'
 else
   ICON='▷'
-  # ♫ 
+  # ICON='♫' 
 fi
 
 if [ $HAS_SONG = 'true' ]
 then
-  echo " $ICON $SONG by $ARTIST  "
+  echo "$ICON $SONG by $ARTIST"
   exit
 else
   echo ""
