@@ -17,7 +17,6 @@ keymap.set('n', 'J', 'mzJ`z')
 keymap.set('x', '<leader>p', "\"_dP")
 
 -- increment/decrement
-keymap.set('v', 'J', ":m '>+1<CR>gv=gv")
 keymap.set('n', '+', '<C-a>')
 keymap.set('n', '-', '<C-x>')
 
