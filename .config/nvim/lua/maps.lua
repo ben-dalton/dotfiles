@@ -32,10 +32,12 @@ keymap.set('n', '<leader>tf', ':tabfirst<cr>', { silent = true })
 keymap.set('n', '<leader>tl', ':tablast<cr>', { silent = true })
 
 -- splits
-keymap.set('n', '<leader>s', ':split<CR>')
-keymap.set('n', '<leader>v', ':vsplit<CR>')
-keymap.set('n', '<leader>S', ':botright split<CR>')
-keymap.set('n', '<leader>V', ':botright vsplit<CR>')
+keymap.set('n', '<leader>ss', ':split<CR>')
+keymap.set('n', '<leader>sj', ':botright split<CR>')
+keymap.set('n', '<leader>sk', ':topleft split<CR>')
+keymap.set('n', '<leader>vv', ':vsplit<CR>')
+keymap.set('n', '<leader>vh', ':topleft vsplit<CR>')
+keymap.set('n', '<leader>vl', ':botright vsplit<CR>')
 
 -- move splits
 keymap.set('n', '<leader>wr', '<C-w>r') -- rotate windows downwards/rightwards
@@ -67,7 +69,7 @@ keymap.set('n', '<C-n>', ':NeoTreeFocusToggle<CR>')
 keymap.set('n', '<Esc>', ':nohlsearch<cr>')
 
 -- replace word under cursor
-keymap.set('n', '<leader>s', ":%s/\\<<C-r><C-w>\\>/<C-r><C-w>/gI<left><left><left>")
+keymap.set('n', '<leader>S', ":%s/\\<<C-r><C-w>\\>/<C-r><C-w>/gI<left><left><left>")
 
 -- scroll the viewport faster
 keymap.set('n', '<C-e>', '3<C-e>')
