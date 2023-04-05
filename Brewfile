@@ -19,7 +19,6 @@ brew 'ctags'
 brew 'fsouza/prettierd/prettierd'
 brew 'fzf'
 brew 'git'
-brew 'git-credential-manager'
 brew 'git-delta'
 brew 'htop'
 brew 'imagemagick'
@@ -51,6 +50,7 @@ cask 'google-drive'
 cask 'iterm2'
 cask 'karabiner-elements'
 cask 'visual-studio-code'
+cask 'ytmdesktop-youtube-music'
 
 # Mac App Store Apps
 mas 'bettersnaptool', id: 417375580
