@@ -62,6 +62,9 @@ keymap.set('n', '<leader><left>', '4<C-w>>')
 keymap.set('n', '<leader><up>', '4<C-w>+')
 keymap.set('n', '<leader><down>', '4<C-w>-')
 
+-- close quickview window
+keymap.set('n', '<leader>ccl', ':ccl')
+
 -- show file tree
 keymap.set('n', '<C-n>', ':NeoTreeFocusToggle<CR>')
 
