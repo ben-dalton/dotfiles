@@ -5,6 +5,8 @@ prettier.setup {
   bin = 'prettierd',
   filetypes = {
     "css",
+    "graphql",
+    "html",
     "javascript",
     "javascriptreact",
     "typescript",

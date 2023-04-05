@@ -52,7 +52,7 @@ vim.api.nvim_create_autocmd(
 
 vim.api.nvim_create_autocmd(
   { "BufWritePre" },
-  { pattern = { "*.tsx", "*.ts", "*.jsx", "*.js" }, command = "OrganizeImports" }
+  { pattern = { "*.tsx", "*.ts" }, command = "OrganizeImports" }
 )
 
 vim.opt.formatoptions:append { ':rcqt' }
