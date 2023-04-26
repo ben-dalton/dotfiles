@@ -7,6 +7,7 @@ tap "homebrew/bundle"
 tap "homebrew/cask"
 tap "homebrew/cask-fonts"
 tap "homebrew/core"
+tap 'jesseduffield/lazygit'
 
 # Plugins
 brew 'mas'
