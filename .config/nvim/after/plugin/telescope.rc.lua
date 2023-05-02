@@ -11,6 +11,7 @@ local fb_actions = require "telescope".extensions.file_browser.actions
 
 telescope.setup {
   defaults = {
+    file_ignore_patterns = {"*%sql%.json"},
     mappings = {
       n = {
         ["q"] = actions.close
@@ -21,7 +22,7 @@ telescope.setup {
     file_browser = {
       theme = "dropdown",
       -- disables netrw and use telescope-file-browser in its place
-      hijack_netrw = false,
+      hijack_netrw = true,
       mappings = {
         -- your custom insert mode mappings
         ["i"] = {

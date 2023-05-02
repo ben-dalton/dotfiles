@@ -199,8 +199,18 @@ export PATH="$HOME/.yarn/bin:$HOME/.config/yarn/global/node_modules/.bin:$PATH"
 
 [ -f ~/.fzf.zsh ] && source ~/.fzf.zsh
 
+# Python
+export LDFLAGS="-L$(brew --prefix gettext)/lib -L$(brew --prefix zlib)/lib -L$(brew --prefix openssl)/lib  -L$(brew --prefix readline)/lib"
+export CPPFLAGS="-I$(brew --prefix gettext)/include -I$(brew --prefix zlib)/include -I$(brew --prefix openssl)/include -I$(brew --prefix readline)/include"
+
+# pyenv
+eval "$(pyenv init -)"
+eval "$(pyenv virtualenv-init -)"
+
 # use config to handle git actions for dotfiles
 alias config='/usr/bin/git --git-dir=$HOME/.cfg/ --work-tree=$HOME'
 
 # Fig post block. Keep at the bottom of this file.
 [[ -f "$HOME/.fig/shell/zshrc.post.zsh" ]] && builtin source "$HOME/.fig/shell/zshrc.post.zsh"
+
+

@@ -66,7 +66,7 @@ keymap.set('n', '<leader><down>', '4<C-w>-')
 keymap.set('n', '<leader>ccl', ':ccl')
 
 -- show file tree
-keymap.set('n', '<C-n>', ':NeoTreeFocusToggle<CR>')
+keymap.set('n', '<C-n>', ':NeoTreeRevealToggle<CR>')
 
 -- hide highlighted search
 keymap.set('n', '<Esc>', ':nohlsearch<cr>')
