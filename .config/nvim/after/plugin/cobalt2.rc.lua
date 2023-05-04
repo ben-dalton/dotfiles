@@ -4,12 +4,14 @@ require('colorbuddy').colorscheme('cobalt2')
 -- highlight ColorColumn ctermbg=0 guibg=#3A3A3A
 -- highlight OverLength ctermbg=DarkRed ctermfg=white guibg=#592929
 -- match OverLength /\%121v.\+/
---
-vim.cmd [[
-  " highlight current cursor line in current buffer only 
-  augroup CursorLine
-    au!
-    au VimEnter,WinEnter,BufWinEnter * setlocal nocursorline
-    au WinLeave * setlocal nocursorline
-  augroup END
-]]
+
+-- show cursor line only in active window
+local cursorGrp = vim.api.nvim_create_augroup("CursorLine", { clear = true })
+vim.api.nvim_create_autocmd(
+  { "InsertLeave", "WinEnter" },
+  { pattern = "*", command = "set cursorline", group = cursorGrp }
+)
+vim.api.nvim_create_autocmd(
+  { "InsertEnter", "WinLeave" },
+  { pattern = "*", command = "set nocursorline", group = cursorGrp }
+)
