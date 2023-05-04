@@ -50,9 +50,9 @@ vim.api.nvim_create_autocmd(
   { pattern = { "*.txt", "*.md" }, command = "setlocal textwidth=80" }
 )
 
-vim.api.nvim_create_autocmd(
-  { "BufWritePre" },
-  { pattern = { "*.tsx", "*.ts" }, command = "OrganizeImports" }
-)
+-- vim.api.nvim_create_autocmd(
+--   { "BufWritePre" },
+--   { pattern = { "*.tsx", "*.ts" }, command = "OrganizeImports" }
+-- )
 
 vim.opt.formatoptions:append { ':rcqt' }
