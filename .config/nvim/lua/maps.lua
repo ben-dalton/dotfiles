@@ -65,6 +65,9 @@ keymap.set('n', '<leader><down>', '4<C-w>-')
 -- close quickview window
 keymap.set('n', '<leader>ccl', ':ccl')
 
+-- open Neural 
+keymap.set('n', '<leader>n', ':Neural<CR>')
+
 -- show file tree
 keymap.set('n', '<C-n>', ':NeoTreeRevealToggle<CR>')
 

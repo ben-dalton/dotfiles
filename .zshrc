@@ -81,6 +81,7 @@ ZSH_CUSTOM=~/.config/oh-my-zsh/
 plugins=(git fig nvm node macos emoji vi-mode)
 
 source $ZSH/oh-my-zsh.sh
+source $HOME/.zshenv
 
 # User configuration
 
