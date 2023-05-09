@@ -63,7 +63,7 @@ keymap.set('n', '<leader><up>', '4<C-w>+')
 keymap.set('n', '<leader><down>', '4<C-w>-')
 
 -- close quickview window
-keymap.set('n', '<leader>ccl<CR>', ':ccl')
+keymap.set('n', '<leader>ccl', ':ccl<CR>')
 
 -- open Neural 
 keymap.set('n', '<leader>n', ':Neural<CR>')
