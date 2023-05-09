@@ -106,7 +106,7 @@ fi
 # Functions
 # Pack up an npm package and set it by the front door
 function packAndMove() {
-  DESTINATION=${1:=~/ben.dalton/Desktop}
+  DESTINATION=${1:=~/Desktop}
   npm pack
   PACKAGE=$( find *.tgz )
   mv $PACKAGE $DESTINATION
@@ -156,7 +156,7 @@ alias vim="nvim"
 alias cppath="pwd|pbcopy"
 alias cleanbuild="npm run clean && npm run build"
 alias rake='noglob rake'
-alias gnuke="git branch | grep -v '^*' | xargs git branch -D"
+alias gnuke="git branch | grep -v $(git rev-parse --abbrev-ref HEAD) | xargs git branch -D"
 alias glg="git lg"
 alias nuw="nib up web"
 alias nsw="nib setup web"
@@ -176,13 +176,6 @@ alias ytmd="~/.config/scripts/ytmd_commands.sh"
 alias mux="tmuxinator"
 alias etmux="cd ~/.config/tmux && vim ."
 alias envim="cd ~/.config/nvim && vim ."
-
-# Roofstock Aliases
-alias rscli="cd ~/RoofstockGits/roofstock.cli && local-ssl-proxy --config local-https-proxy.json"
-alias rswebapp="cd ~/RoofstockGits/retail-web-app/src/Roofstock.Web.NextApp && yarn dev"
-alias rsgis="cd ~/RoofstockGits/gis-app/Roofstock.GisApp.NextApp && yarn dev"
-alias gis="cd ~/RoofstockGits/gis-app"
-alias gisdev="~/.config/scripts/gis-app.sh"
 
 function gitup() {
   BRANCH=$(git branch --show-current)
