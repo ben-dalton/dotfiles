@@ -1,0 +1,60 @@
+# /Users/bendalton/.config/tmuxinator/udemy-microservices.yml
+
+name: udemy-microservices
+root: ~/Projects/sandbox/udemy/microservices-blog/
+
+# Optional tmux socket
+# socket_name: foo
+
+# Note that the pre and post options have been deprecated and will be replaced by
+# project hooks.
+
+# Project hooks
+
+# Runs on project start, always
+# on_project_start: command
+
+# Run on project start, the first time
+# on_project_first_start: command
+
+# Run on project start, after the first time
+# on_project_restart: command
+
+# Run on project exit ( detaching from tmux session )
+# on_project_exit: command
+
+# Run on project stop
+# on_project_stop: command
+
+# Runs in each window and pane before window/pane specific commands. Useful for setting up interpreter versions.
+# pre_window: rbenv shell 2.0.0-p247
+
+# Pass command line options to tmux. Useful for specifying a different tmux.conf.
+# tmux_options: -f ~/.tmux.mac.conf
+
+# Change the command to call tmux.  This can be used by derivatives/wrappers like byobu.
+# tmux_command: byobu
+
+# Specifies (by name or index) which window will be selected on project startup. If not set, the first window is used.
+# startup_window: editor
+
+# Specifies (by index) which pane of the specified window will be selected on project startup. If not set, the first pane is used.
+# startup_pane: 1
+
+# Controls whether the tmux session should be attached to automatically. Defaults to true.
+# attach: false
+
+windows:
+  - console:
+      layout:  6530,236x68,0,0[236x23,0,0{118x23,0,0,3,117x23,119,0,19},236x44,0,24{118x44,0,24[118x22,0,24,17,118x21,0,47,20],117x44,119,24[117x22,119,24,18,117x21,119,47,21]}] 
+      panes:
+        - cd ~/Projects/sandbox/udemy/microservices-blog/client/ && npm start
+        - cd ~/Projects/sandbox/udemy/microservices-blog/comments/ && npm start
+        - cd ~/Projects/sandbox/udemy/microservices-blog/event-bus/ && npm start
+        - cd ~/Projects/sandbox/udemy/microservices-blog/moderation/ && npm start
+        - cd ~/Projects/sandbox/udemy/microservices-blog/posts/ && npm start
+        - cd ~/Projects/sandbox/udemy/microservices-blog/query/ && npm start
+  - vim:
+      panes:
+        - cd ~/Projects/sandbox/udemy/microservices-blog && vim .
+
