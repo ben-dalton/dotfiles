@@ -5,6 +5,17 @@ if (not status) then return end
 
 local protocol = require('vim.lsp.protocol')
 
+local eslint = require('lspconfig').eslint
+
+eslint.setup({
+  on_attach = function(client, bufnr)
+    vim.api.nvim_create_autocmd("BufWritePre", {
+      buffer = bufnr,
+      command = "EslintFixAll",
+    })
+  end,
+})
+
 -- Use an on_attach function to only map the following keys
 -- after the language server attaches to the current buffer
 local on_attach = function(client, bufnr)
