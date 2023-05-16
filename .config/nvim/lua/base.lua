@@ -8,6 +8,7 @@ vim.wo.number = true
 
 vim.opt.ai = true -- auto indent
 vim.opt.autoindent = true
+vim.opt.autoread = true
 vim.opt.backspace = 'start,eol,indent'
 vim.opt.backup = false
 vim.opt.backupskip = '/tmp/*,/private/tmp/*'
@@ -19,6 +20,7 @@ vim.opt.ignorecase = true
 vim.opt.inccommand = 'split'
 vim.opt.laststatus = 2
 vim.opt.path:append { '**' } -- finding files - search in subfolders
+vim.opt.relativenumber = true
 vim.opt.scrolloff = 10
 vim.opt.shell = 'zsh'
 vim.opt.shiftwidth = 2
