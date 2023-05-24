@@ -54,3 +54,8 @@ windows:
   - vim:
       panes:
         - vim -O ~/Projects/cloudzero/frontend-mono-repo/package.json
+  - e2e:
+      layout: 9f3b,364x94,0,0{110x94,0,0,10,253x94,111,0,12}
+      panes:
+        - cd ~/Projects/cloudzero/frontend-mono-repo/packages/e2e/ && yarn cypress
+        - cd ~/Projects/cloudzero/frontend-mono-repo/packages/e2e/ && vim .
