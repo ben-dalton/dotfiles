@@ -42,6 +42,7 @@ telescope.setup {
 }
 
 telescope.load_extension("file_browser")
+telescope.load_extension('textcase')
 
 vim.keymap.set('n', ';f',
   function()
@@ -65,6 +66,9 @@ end)
 vim.keymap.set('n', '<leader>fe', function()
   builtin.diagnostics()
 end)
+vim.api.nvim_set_keymap('n', 'ga.', '<cmd>TextCaseOpenTelescope<CR>', { desc = "Telescope" })
+vim.api.nvim_set_keymap('v', 'ga.', "<cmd>TextCaseOpenTelescope<CR>", { desc = "Telescope" })
+
 vim.keymap.set("n", "<leader>ft", function()
   telescope.extensions.file_browser.file_browser({
     path = "%:p:h",
