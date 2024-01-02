@@ -84,6 +84,7 @@ plugins=(git fig nvm node macos emoji vi-mode)
 
 source $ZSH/oh-my-zsh.sh
 source $HOME/.zshenv
+source $HOME/.config/op/plugins.sh
 
 # User configuration
 
@@ -208,5 +209,4 @@ alias config='/usr/bin/git --git-dir=$HOME/.cfg/ --work-tree=$HOME'
 
 # Fig post block. Keep at the bottom of this file.
 [[ -f "$HOME/.fig/shell/zshrc.post.zsh" ]] && builtin source "$HOME/.fig/shell/zshrc.post.zsh"
-
 
