@@ -86,3 +86,4 @@ keymap.set('n', 'j', 'gj', { silent = true })
 keymap.set('n', 'k', 'gk', { silent = true })
 keymap.set('n', '^', 'g^', { silent = true })
 keymap.set('n', '$', 'g$', { silent = true })
+
