@@ -6,11 +6,6 @@ return {
 		init = function()
 			require("colorbuddy").colorscheme("cobalt2")
 
-			-- execute "set colorcolumn=" . join(range(120,335), ',')
-			-- highlight ColorColumn ctermbg=0 guibg=#3A3A3A
-			-- highlight OverLength ctermbg=DarkRed ctermfg=white guibg=#592929
-			-- match OverLength /\%121v.\+/
-
 			-- show cursor line only in active window
 			local cursorGrp = vim.api.nvim_create_augroup("CursorLine", { clear = true })
 			vim.api.nvim_create_autocmd(
