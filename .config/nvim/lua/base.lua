@@ -24,7 +24,7 @@ vim.opt.ignorecase = true
 vim.opt.inccommand = "split"
 vim.opt.laststatus = 2
 vim.opt.path:append({ "**" }) -- finding files - search in subfolders
-vim.opt.relativenumber = true
+vim.opt.relativenumber = false
 vim.opt.scrolloff = 10
 vim.opt.shell = "zsh"
 vim.opt.showcmd = true
@@ -49,6 +49,11 @@ vim.opt.winblend = 0
 vim.opt.wildoptions = "pum"
 vim.opt.pumblend = 5
 vim.opt.background = "dark"
+vim.filetype.add({
+	extension = {
+		mdx = "mdx",
+	},
+})
 
 -- autoread changes outside of vim
 vim.o.autoread = true

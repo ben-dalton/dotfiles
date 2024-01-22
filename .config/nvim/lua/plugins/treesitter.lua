@@ -35,6 +35,7 @@ return {
 					enable = true,
 				},
 			})
+			vim.treesitter.language.register("markdown", "mdx")
 		end,
 	},
 }

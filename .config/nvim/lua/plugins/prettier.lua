@@ -1,14 +1,14 @@
 return {
   "MunifTanjim/prettier.nvim",
   dependencies = {
-    'neovim/nvim-lspconfig',
-    'jose-elias-alvarez/null-ls.nvim'
+    "neovim/nvim-lspconfig",
+    "jose-elias-alvarez/null-ls.nvim",
   },
   config = function()
     local prettier = require("prettier")
 
     prettier.setup({
-      bin = 'prettierd', -- or `'prettierd'` (v0.23.3+)
+      bin = "prettierd", -- or `'prettierd'` (v0.23.3+)
       filetypes = {
         "css",
         "graphql",
@@ -18,6 +18,7 @@ return {
         "json",
         "less",
         "markdown",
+        "mdx",
         "scss",
         "typescript",
         "typescriptreact",
@@ -35,7 +36,7 @@ return {
           return true
         end,
         timeout = 5000,
-      }
+      },
     })
-  end
+  end,
 }
