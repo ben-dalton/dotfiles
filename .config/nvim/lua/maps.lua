@@ -24,7 +24,9 @@ keymap.set("n", "-", "<C-x>")
 keymap.set("n", "<C-a>", "gg<S-v>G")
 
 -- tabs
-keymap.set("n", "<leader>tn", ":tabnew<cr>", { silent = true })
+keymap.set("n", "<leader>tt", ":tabnew<cr>", { silent = true })
+keymap.set("n", "<leader>tn", ":tabNext<cr>", { silent = true })
+keymap.set("n", "<leader>tp", ":tabprevious<cr>", { silent = true })
 keymap.set("n", "<leader>tm", ":tabmove ")
 keymap.set("n", "<leader>tc", ":tabclose<cr>", { silent = true })
 keymap.set("n", "<leader>to", ":tabonly<cr>", { silent = true })
