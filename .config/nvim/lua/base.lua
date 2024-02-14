@@ -24,7 +24,7 @@ vim.opt.ignorecase = true
 vim.opt.inccommand = "split"
 vim.opt.laststatus = 2
 vim.opt.path:append({ "**" }) -- finding files - search in subfolders
-vim.opt.relativenumber = false
+vim.opt.relativenumber = true
 vim.opt.scrolloff = 10
 vim.opt.shell = "zsh"
 vim.opt.showcmd = true
