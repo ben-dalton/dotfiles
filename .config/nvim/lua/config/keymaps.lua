@@ -1,4 +1,10 @@
+-- -- Keymaps are automatically loaded on the VeryLazy event
+-- -- Default keymaps that are always set: https://github.com/LazyVim/LazyVim/blob/main/lua/lazyvim/config/keymaps.lua
+-- -- Add any additional keymaps here
 local keymap = vim.keymap
+
+-- yank current file path
+keymap.set("n", "<leader>yp", ':let @+ = expand("%")<CR>')
 
 -- set leader to space
 vim.g.mapleader = " "
@@ -51,24 +57,15 @@ keymap.set("n", "<leader>wh", "<C-w>H") -- move current window to left, full hei
 keymap.set("n", "<leader>wl", "<C-w>L") -- move current window to left, full height
 keymap.set("n", "<leader>wt", "<C-w>T") -- move current window to a new tab
 
--- move cursor between splits
-keymap.set("", "<C-h>", "<C-w>h")
-keymap.set("", "<C-k>", "<C-w>k")
-keymap.set("", "<C-j>", "<C-w>j")
-keymap.set("", "<C-l>", "<C-w>l")
-
 -- resize splits
 keymap.set("n", "<leader>=", "<C-w>=")
-keymap.set("n", "<leader><left", "4<C-w><")
+keymap.set("n", "<leader><left>", "4<C-w><")
 keymap.set("n", "<leader><left>", "4<C-w>>")
 keymap.set("n", "<leader><up>", "4<C-w>+")
 keymap.set("n", "<leader><down>", "4<C-w>-")
 
 -- close quickview window
 keymap.set("n", "<leader>ccl", ":ccl<CR>")
-
--- show file tree
-keymap.set("n", "<C-n>", ":NeoTreeRevealToggle<CR>")
 
 -- hide highlighted search
 keymap.set("n", "<Esc>", ":nohlsearch<cr>")
@@ -79,12 +76,6 @@ keymap.set("n", "<leader>S", ":%s/\\<<C-r><C-w>\\>/<C-r><C-w>/gI<left><left><lef
 -- scroll the viewport faster
 keymap.set("n", "<C-e>", "3<C-e>")
 keymap.set("n", "<C-y>", "3<C-y>")
-
--- make moving up/down work on wrapped lines of text
-keymap.set("n", "j", "gj", { silent = true })
-keymap.set("n", "k", "gk", { silent = true })
-keymap.set("n", "^", "g^", { silent = true })
-keymap.set("n", "$", "g$", { silent = true })
 
 -- jump forward in jump list with ctrl-p
 keymap.set("n", "<C-p>", "<C-i>")

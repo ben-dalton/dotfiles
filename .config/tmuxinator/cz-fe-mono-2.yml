@@ -1,7 +1,7 @@
-# /Users/bendalton/.config/tmuxinator/cz-fe-mono.yml
+# /Users/bendalton/.config/tmuxinator/cz-fe-mono-2.yml
 
-name: cz-fe-mono
-root: ~/Projects/cloudzero/frontend-mono-repo
+name: cz-fe-mono-2
+root: ~/Projects/cloudzero/frontend-mono-repo-2
 
 # Optional tmux socket
 # socket_name: foo
@@ -49,16 +49,11 @@ windows:
       layout: 6a71,533x71,0,0{266x71,0,0[266x23,0,0,1,266x23,0,24,8,266x23,0,48,4],266x71,267,0,5}
       panes:
         - yarn proxy
-        - cd ~/Projects/cloudzero/frontend-mono-repo/foundation/ && yarn watch
-        - cd ~/Projects/cloudzero/frontend-mono-repo/packages/web-frontend  && yarn start
+        - cd ~/Projects/cloudzero/frontend-mono-repo-2/foundation/ && yarn watch
+        - cd ~/Projects/cloudzero/frontend-mono-repo-2/packages/web-frontend  && yarn start
         -
   - vim:
       layout: 8a7d,533x71,0,0{132x71,0,0,2,400x71,133,0,6}
       panes:
-        - cd ~/Projects/cloudzero/frontend-mono-repo/ && claude
-        - cd ~/Projects/cloudzero/frontend-mono-repo/ && vim
-  - e2e:
-      layout: 9f3b,364x94,0,0{110x94,0,0,10,253x94,111,0,12}
-      panes:
-        - cd ~/Projects/cloudzero/frontend-mono-repo/packages/e2e/ && echo 'Run "yarn cypress" to start e2e testing server'
-        - cd ~/Projects/cloudzero/frontend-mono-repo/packages/e2e/
+        - cd ~/Projects/cloudzero/frontend-mono-repo-2/ && claude
+        - cd ~/Projects/cloudzero/frontend-mono-repo-2/ && vim

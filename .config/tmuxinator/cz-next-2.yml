@@ -1,7 +1,7 @@
-# /Users/bendalton/.config/tmuxinator/cz-northstar.yml
+# /Users/bendalton/.config/tmuxinator/cz-fe-mono.yml
 
-name: cz-northstar
-root: ~/Projects/cloudzero/research-northstar/
+name: cz-next-2
+root: ~/Projects/cloudzero/feature-web-apps-2
 
 # Optional tmux socket
 # socket_name: foo
@@ -45,7 +45,13 @@ root: ~/Projects/cloudzero/research-northstar/
 # attach: false
 
 windows:
-  - server: yarn dev
-  - vim:
+  - console:
+      layout: 8a7d,533x71,0,0{132x71,0,0,2,400x71,133,0,6}
       panes:
-        - vim
+        - cd ~/Projects/cloudzero/feature-web-apps-2 && pnpm start
+        - pwd
+  - vim:
+      layout: 8a7d,533x71,0,0{132x71,0,0,2,400x71,133,0,6}
+      panes:
+        - cd ~/Projects/cloudzero/feature-web-apps-2 && claude --dangerously-skip-permissions
+        - cd ~/Projects/cloudzero/feature-web-apps-2 && vim

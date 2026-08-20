@@ -1,6 +1,7 @@
-# Fig pre block. Keep at the top of this file.
-[[ -f "$HOME/.fig/shell/zshrc.pre.zsh" ]] && builtin source "$HOME/.fig/shell/zshrc.pre.zsh"
-# If you come from bash you might have to change your $PATH.
+# Kiro CLI pre block. Keep at the top of this file.
+# [[ -f "${HOME}/Library/Application Support/kiro-cli/shell/zshrc.pre.zsh" ]] && builtin source "${HOME}/Library/Application Support/kiro-cli/shell/zshrc.pre.zsh"
+# # Amazon Q pre block. Keep at the top of this file.
+# # If you come from bash you might have to change your $PATH.
 # export PATH=$HOME/bin:/usr/local/bin:$PATH
 
 [[ -f "$HOME/projects/cloudzero/frontend-mono-repo/.env.yarn" ]] && builtin source "$HOME/projects/cloudzero/frontend-mono-repo/.env.yarn" 
@@ -35,7 +36,7 @@ ZSH_THEME="ben"
 
 # Uncomment one of the following lines to change the auto-update behavior
 # zstyle ':omz:update' mode disabled  # disable automatic updates
-zstyle ':omz:update' mode auto      # update automatically without asking
+# zstyle ':omz:update' mode auto      # update automatically without asking
 # zstyle ':omz:update' mode reminder  # just remind me to update when it's time
 
 # Uncomment the following line to change how often to auto-update (in days).
@@ -80,13 +81,16 @@ ZSH_CUSTOM=~/.config/oh-my-zsh/
 # Custom plugins may be added to $ZSH_CUSTOM/plugins/
 # Example format: plugins=(rails git textmate ruby lighthouse)
 # Add wisely, as too many plugins slow down shell startup.
-plugins=(git fig nvm node macos emoji vi-mode)
+plugins=(git nvm node macos emoji vi-mode)
 
 source $ZSH/oh-my-zsh.sh
 source $HOME/.zshenv
 source $HOME/.config/op/plugins.sh
 
 # User configuration
+
+# Personal scripts
+export PATH="$HOME/bin:$PATH"
 
 # Autojump
 [ -f /usr/local/etc/profile.d/autojump.sh ] && . /usr/local/etc/profile.d/autojump.sh
@@ -107,6 +111,21 @@ fi
 # export ARCHFLAGS="-arch x86_64"
 
 # Functions
+# kill a process on a certain port
+killPort() {
+  if [[ -z "$1" ]]; then
+    echo "usage: killPort <port>"
+    return 1
+  fi
+  local pids=(${(f)"$(lsof -ti tcp:"$1")"})
+  if [[ ${#pids} -eq 0 ]]; then
+    echo "nothing running on port $1"
+    return 0
+  fi
+  echo "killing PID(s) on port $1: $pids"
+  kill -9 $pids
+}
+
 # Pack up an npm package and set it by the front door
 function packAndMove() {
   DESTINATION=${1:=~/Desktop}
@@ -159,8 +178,8 @@ alias vim="nvim"
 alias cppath="pwd|pbcopy"
 alias cleanbuild="npm run clean && npm run build"
 alias rake='noglob rake'
-alias gnuke="git branch | grep -v $(git rev-parse --abbrev-ref HEAD) | xargs git branch -D"
-alias glg="git lg"
+alias gnuke='[ -d .git ] && git branch | grep -v $(git rev-parse --abbrev-ref HEAD) | xargs git branch -D || echo "Not a git repository"'
+alias glg='[ -d .git ] && git lg || echo "Not a git repository"'
 alias nuw="nib up web"
 alias nsw="nib setup web"
 alias nb="nib build --pull"
@@ -179,6 +198,21 @@ alias ytmd="~/.config/scripts/ytmd_commands.sh"
 alias mux="tmuxinator"
 alias etmux="cd ~/.config/tmux && vim ."
 alias envim="cd ~/.config/nvim && vim ."
+alias transparencyScript="~/.config/kitty/toggle-transparency.sh"
+alias kittyConfig="cd ~/.config/kitty && vim ."
+
+toggleTransparency() {
+    # Run your CLI command to toggle transparency
+    transparencyScript
+    # Use AppleScript to send Ctrl+Cmd+, to Kitty
+    osascript -e 'tell application "System Events" to keystroke "," using {control down, command down}'
+}
+
+if [ -n "$TMUX" ]; then
+  tmux wait-for -S zsh-config-loaded
+  tmux wait-for -S tmux-config-loaded
+  tmux wait-for -S nvim-config-loaded
+fi
 
 function gitup() {
   BRANCH=$(git branch --show-current)
@@ -190,6 +224,7 @@ eval "$(rbenv init - zsh)"
 export NVM_DIR="$HOME/.nvm"
 [ -s "$NVM_DIR/nvm.sh" ] && \. "$NVM_DIR/nvm.sh"  # This loads nvm
 [ -s "$NVM_DIR/bash_completion" ] && \. "$NVM_DIR/bash_completion"  # This loads nvm bash_completion
+nvm use node
 export PATH="$HOME/.yarn/bin:$HOME/.config/yarn/global/node_modules/.bin:$PATH"
 
 [ -f ~/.fzf.zsh ] && source ~/.fzf.zsh
@@ -199,12 +234,48 @@ export LDFLAGS="-L$(brew --prefix gettext)/lib -L$(brew --prefix zlib)/lib -L$(b
 export CPPFLAGS="-I$(brew --prefix gettext)/include -I$(brew --prefix zlib)/include -I$(brew --prefix openssl)/include -I$(brew --prefix readline)/include"
 
 # pyenv
+export PYENV_ROOT="$HOME/.pyenv"
+command -v pyenv >/dev/null || export PATH="$PYENV_ROOT/bin:$PATH"
 eval "$(pyenv init -)"
 eval "$(pyenv virtualenv-init -)"
+
+# venv
+alias venvactivate="source .venv/bin/activate &> /dev/null || source venv/bin/activate &> /dev/null || true"
+venvactivate
+alias venvcreate="uv venv ./.venv"
+alias venvall="venvcreate && venvactivate"
 
 # use config to handle git actions for dotfiles
 alias config='/usr/bin/git --git-dir=$HOME/.cfg/ --work-tree=$HOME'
 
-# Fig post block. Keep at the bottom of this file.
-[[ -f "$HOME/.fig/shell/zshrc.post.zsh" ]] && builtin source "$HOME/.fig/shell/zshrc.post.zsh"
+# # Amazon Q post block. Keep at the bottom of this file.
+# . "$HOME/.cargo/env"
+source $HOME/.cloudzerorc
+source $HOME/.sumo-keys # The next line updates PATH for the Google Cloud SDK.
+if [ -f '/Users/bendalton/google-cloud-sdk/path.zsh.inc' ]; then . '/Users/bendalton/google-cloud-sdk/path.zsh.inc'; fi
+source $HOME/.launch-darkly-keys
 
+# The next line enables shell command completion for gcloud.
+if [ -f '/Users/bendalton/google-cloud-sdk/completion.zsh.inc' ]; then . '/Users/bendalton/google-cloud-sdk/completion.zsh.inc'; fi
+
+# pnpm
+export PNPM_HOME="/Users/bendalton/Library/pnpm"
+case ":$PATH:" in
+  *":$PNPM_HOME:"*) ;;
+  *) export PATH="$PNPM_HOME:$PATH" ;;
+esac
+# pnpm end
+
+# rustup (installed via Homebrew: $(brew --prefix rustup)/bin)
+export PATH="/opt/homebrew/opt/rustup/bin:$PATH"
+
+export AWS_DEFAULT_SSO_START_URL=https://cloudzero.awsapps.com/start
+export AWS_DEFAULT_SSO_REGION=us-east-1
+export AWS_DEFAULT_REGION=us-east-1
+
+# Kiro CLI post block. Keep at the bottom of this file.
+# [[ -f "${HOME}/Library/Application Support/kiro-cli/shell/zshrc.post.zsh" ]] && builtin source "${HOME}/Library/Application Support/kiro-cli/shell/zshrc.post.zsh"
+
+# Cortex MCP - Claude Code
+# Secrets live in ~/.zshrc.local (never committed)
+[[ -f "$HOME/.zshrc.local" ]] && source "$HOME/.zshrc.local"
