@@ -1,0 +1,50 @@
+#!/usr/bin/env bash
+#
+# fe-verify — run frontend verify checks and stamp the conductor verify marker.
+#
+# The conductor-verify-gate hook blocks `git commit` unless
+# ~/.claude/verify-last-run was touched within the last 10 minutes. This script
+# runs the real checks and only stamps the marker if they ALL pass — so verify
+# and the gate are satisfied in one honest step, with no window for the marker
+# to go stale between verifying and committing.
+#
+# Usage:
+#   fe-verify                      # typecheck + tests for the default package
+#   fe-verify libs/ui/org-settings # typecheck + tests for a specific path
+#
+# Run it as its own command, then `git commit` in the next call.
+
+set -euo pipefail
+
+TEST_PATH="${1:-libs/ui/org-settings}"
+MARKER="$HOME/.claude/verify-last-run"
+
+# Find repo root (works from any worktree); fall back to cwd.
+ROOT="$(git rev-parse --show-toplevel 2>/dev/null || pwd)"
+cd "$ROOT"
+
+echo "▶ [1/3] typecheck (tsc)…"
+pnpm typecheck:tsc
+
+echo "▶ [2/3] tests — $TEST_PATH …"
+pnpm exec vitest run "$TEST_PATH"
+
+echo "▶ [3/3] biome check (changed .ts/.tsx)…"
+# Only lint files this branch actually changed, so pre-existing issues elsewhere
+# don't block the commit. Compares against origin/main when available.
+BASE="$(git merge-base HEAD origin/main 2>/dev/null || echo HEAD)"
+CHANGED="$(
+  {
+    git diff --name-only --diff-filter=ACM "$BASE"...HEAD -- '*.ts' '*.tsx'
+    git diff --name-only --diff-filter=ACM -- '*.ts' '*.tsx'
+    git diff --cached --name-only --diff-filter=ACM -- '*.ts' '*.tsx'
+  } | sort -u
+)"
+if [ -n "$CHANGED" ]; then
+  echo "$CHANGED" | xargs pnpm exec biome check
+else
+  echo "  (no changed .ts/.tsx files)"
+fi
+
+date +%s > "$MARKER"
+echo "✅ fe-verify passed — verify marker stamped ($MARKER). Safe to commit."

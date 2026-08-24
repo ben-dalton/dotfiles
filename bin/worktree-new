@@ -1,0 +1,56 @@
+#!/bin/bash
+# Create a new worktree for a Jira ticket
+
+# Detect repo from current directory
+MAIN_WORKTREE=$(git worktree list 2>/dev/null | head -1 | awk '{print $1}')
+if [[ -z "$MAIN_WORKTREE" ]]; then
+  echo "Not in a git repository. Run from any worktree or the main checkout."
+  exit 1
+fi
+REPO_BASE=$(dirname "$MAIN_WORKTREE")
+REPO_NAME=$(basename "$MAIN_WORKTREE")
+
+ticket="$1"
+base_branch="${2:-main}"
+
+if [[ -z "$ticket" ]]; then
+  echo "Usage: worktree-new <TICKET> [base-branch]"
+  echo ""
+  echo "Examples:"
+  echo "  worktree-new CP-12345           # Branch from main"
+  echo "  worktree-new CP-12345 CP-12344  # Branch from another ticket"
+  exit 1
+fi
+
+cd "$MAIN_WORKTREE" || { echo "Could not find repo at $MAIN_WORKTREE"; exit 1; }
+
+# Fetch latest
+echo "Fetching latest..."
+git fetch origin
+
+# Determine the base
+if [[ "$base_branch" == "main" ]]; then
+  base_ref="origin/main"
+else
+  base_ref="$base_branch"
+fi
+
+# Create worktree
+worktree_path="$REPO_BASE/$REPO_NAME-$ticket"
+
+echo "Creating worktree at $worktree_path..."
+git worktree add "$worktree_path" -b "$ticket" "$base_ref"
+
+if [[ $? -eq 0 ]]; then
+  echo ""
+  echo "✅ Worktree created!"
+  echo ""
+  echo "Next steps:"
+  echo "  cd $worktree_path"
+  echo "  pnpm install  # if needed"
+  echo "  pnpm start --port 8081"
+  echo "  claude"
+else
+  echo "❌ Failed to create worktree"
+  exit 1
+fi

@@ -1,0 +1,76 @@
+#!/bin/bash
+# Show work in progress across all worktrees
+
+# Detect repo from current directory
+MAIN_WORKTREE=$(git worktree list 2>/dev/null | head -1 | awk '{print $1}')
+if [[ -z "$MAIN_WORKTREE" ]]; then
+  echo "Not in a git repository. Run from any worktree or the main checkout."
+  exit 1
+fi
+
+echo "=== Work In Progress ==="
+echo ""
+
+# Check which ports are in use
+port_8081_cwd=""
+port_8082_cwd=""
+
+port_8081_pid=$(lsof -ti :8081 -sTCP:LISTEN 2>/dev/null | head -1)
+port_8082_pid=$(lsof -ti :8082 -sTCP:LISTEN 2>/dev/null | head -1)
+
+if [[ -n "$port_8081_pid" ]]; then
+  port_8081_cwd=$(lsof -p "$port_8081_pid" 2>/dev/null | awk '/cwd/ {print $NF}')
+fi
+if [[ -n "$port_8082_pid" ]]; then
+  port_8082_cwd=$(lsof -p "$port_8082_pid" 2>/dev/null | awk '/cwd/ {print $NF}')
+fi
+
+cd "$MAIN_WORKTREE" 2>/dev/null || { echo "Could not find repo at $MAIN_WORKTREE"; exit 1; }
+
+git worktree list --porcelain | while read -r line; do
+  if [[ $line == worktree* ]]; then
+    path="${line#worktree }"
+  elif [[ $line == branch* ]]; then
+    branch="${line#branch refs/heads/}"
+    dir=$(basename "$path")
+
+    echo "📁 $dir"
+    echo "   Branch: $branch"
+
+    # Check if this worktree has a server running
+    if [[ "$path" == "$port_8081_cwd" ]]; then
+      echo "   🟢 http://localhost:8081"
+    elif [[ "$path" == "$port_8082_cwd" ]]; then
+      echo "   🟢 http://localhost:8082"
+    else
+      echo "   ⚪ No server"
+    fi
+
+    # Check for uncommitted changes
+    changes=$(git -C "$path" status --porcelain 2>/dev/null)
+    if [[ -n "$changes" ]]; then
+      echo "   ⚠️  Uncommitted changes"
+    fi
+
+    # Show last commit
+    last_commit=$(git -C "$path" log -1 --format="%ar" 2>/dev/null)
+    echo "   Last commit: $last_commit"
+    echo ""
+  fi
+done
+
+echo "=== Ports ==="
+if [[ -n "$port_8081_pid" ]]; then
+  echo "🟢 8081: $(basename "$port_8081_cwd" 2>/dev/null || echo "in use")"
+else
+  echo "⚪ 8081: available"
+fi
+if [[ -n "$port_8082_pid" ]]; then
+  echo "🟢 8082: $(basename "$port_8082_cwd" 2>/dev/null || echo "in use")"
+else
+  echo "⚪ 8082: available"
+fi
+
+echo ""
+echo "=== Open PRs ==="
+gh pr list --author="@me" --state=open --json number,title,headRefName --template '{{range .}}#{{.number}} [{{.headRefName}}] {{.title}}{{"\n"}}{{end}}' 2>/dev/null || echo "Could not fetch PRs (gh not authenticated?)"

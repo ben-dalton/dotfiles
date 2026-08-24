@@ -1,0 +1,59 @@
+#!/bin/bash
+# Clean up a worktree after PR is merged
+
+# Detect repo from current directory
+MAIN_WORKTREE=$(git worktree list 2>/dev/null | head -1 | awk '{print $1}')
+if [[ -z "$MAIN_WORKTREE" ]]; then
+  echo "Not in a git repository. Run from any worktree or the main checkout."
+  exit 1
+fi
+REPO_BASE=$(dirname "$MAIN_WORKTREE")
+REPO_NAME=$(basename "$MAIN_WORKTREE")
+
+ticket="$1"
+
+if [[ -z "$ticket" ]]; then
+  echo "Usage: worktree-cleanup <TICKET>"
+  echo ""
+  echo "This removes the worktree and deletes the local branch."
+  echo "Use after your PR has been squash-merged."
+  exit 1
+fi
+
+cd "$MAIN_WORKTREE" || { echo "Could not find repo at $MAIN_WORKTREE"; exit 1; }
+
+worktree_path="$REPO_BASE/$REPO_NAME-$ticket"
+
+# Check if worktree exists
+if [[ ! -d "$worktree_path" ]]; then
+  echo "Worktree not found at $worktree_path"
+  echo ""
+  echo "Existing worktrees:"
+  git worktree list
+  exit 1
+fi
+
+# Check for uncommitted changes
+changes=$(git -C "$worktree_path" status --porcelain 2>/dev/null)
+if [[ -n "$changes" ]]; then
+  echo "⚠️  Warning: Worktree has uncommitted changes:"
+  git -C "$worktree_path" status --short
+  echo ""
+  read -p "Continue anyway? (y/N) " confirm
+  if [[ "$confirm" != "y" && "$confirm" != "Y" ]]; then
+    echo "Aborted."
+    exit 1
+  fi
+fi
+
+echo "Removing worktree..."
+git worktree remove "$worktree_path" --force
+
+echo "Deleting branch $ticket..."
+git branch -D "$ticket" 2>/dev/null || echo "Branch already deleted or doesn't exist"
+
+echo ""
+echo "✅ Cleaned up $ticket"
+echo ""
+echo "Remaining worktrees:"
+git worktree list
