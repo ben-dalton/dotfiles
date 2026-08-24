@@ -198,7 +198,6 @@ alias ytmd="~/.config/scripts/ytmd_commands.sh"
 alias mux="tmuxinator"
 alias etmux="cd ~/.config/tmux && vim ."
 alias envim="cd ~/.config/nvim && vim ."
-alias transparencyScript="~/.config/kitty/toggle-transparency.sh"
 alias kittyConfig="cd ~/.config/kitty && vim ."
 
 toggleTransparency() {
