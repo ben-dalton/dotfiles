@@ -9,3 +9,7 @@
 .cloudzerorc
 *keys
 *.env
+
+# Moom: layouts embed saved window titles (work email, private Slack channels,
+# Jira ticket text), and ben.moomlicense is a license key. Kept local.
+.moom/
