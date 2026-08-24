@@ -203,7 +203,7 @@ alias kittyConfig="cd ~/.config/kitty && vim ."
 
 toggleTransparency() {
     # Run your CLI command to toggle transparency
-    transparencyScript
+    "$HOME/.config/kitty/toggle-transparency.sh"
     # Use AppleScript to send Ctrl+Cmd+, to Kitty
     osascript -e 'tell application "System Events" to keystroke "," using {control down, command down}'
 }
