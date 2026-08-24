@@ -2,3 +2,10 @@
 *.bak
 .config/tmux/plugins/
 .config/nvim/lazy/
+
+# Secrets — never commit (see also: showUntrackedFiles=no only hides, it does not block `add`)
+.zshenv
+.zshrc.local
+.cloudzerorc
+*keys
+*.env

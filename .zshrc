@@ -84,8 +84,8 @@ ZSH_CUSTOM=~/.config/oh-my-zsh/
 plugins=(git nvm node macos emoji vi-mode)
 
 source $ZSH/oh-my-zsh.sh
-source $HOME/.zshenv
-source $HOME/.config/op/plugins.sh
+[[ -f "$HOME/.zshenv" ]] && source "$HOME/.zshenv"
+# source $HOME/.config/op/plugins.sh
 
 # User configuration
 
@@ -250,10 +250,10 @@ alias config='/usr/bin/git --git-dir=$HOME/.cfg/ --work-tree=$HOME'
 
 # # Amazon Q post block. Keep at the bottom of this file.
 # . "$HOME/.cargo/env"
-source $HOME/.cloudzerorc
-source $HOME/.sumo-keys # The next line updates PATH for the Google Cloud SDK.
+[[ -f "$HOME/.cloudzerorc" ]] && source "$HOME/.cloudzerorc"
+[[ -f "$HOME/.sumo-keys" ]] && source "$HOME/.sumo-keys" # The next line updates PATH for the Google Cloud SDK.
 if [ -f '/Users/bendalton/google-cloud-sdk/path.zsh.inc' ]; then . '/Users/bendalton/google-cloud-sdk/path.zsh.inc'; fi
-source $HOME/.launch-darkly-keys
+[[ -f "$HOME/.launch-darkly-keys" ]] && source "$HOME/.launch-darkly-keys"
 
 # The next line enables shell command completion for gcloud.
 if [ -f '/Users/bendalton/google-cloud-sdk/completion.zsh.inc' ]; then . '/Users/bendalton/google-cloud-sdk/completion.zsh.inc'; fi
