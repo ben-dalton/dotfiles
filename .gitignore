@@ -1,6 +1,7 @@
 .DS_Store
 *.bak
 .config/tmux/plugins/
+.config/kitty/current-theme.conf
 .config/nvim/lazy/
 
 # Secrets — never commit (see also: showUntrackedFiles=no only hides, it does not block `add`)
