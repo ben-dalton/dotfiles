@@ -38,10 +38,10 @@ CHANGED="$(
     git diff --name-only --diff-filter=ACM "$BASE"...HEAD -- '*.ts' '*.tsx'
     git diff --name-only --diff-filter=ACM -- '*.ts' '*.tsx'
     git diff --cached --name-only --diff-filter=ACM -- '*.ts' '*.tsx'
-  } | sort -u
+  } | sort -u | while read -r f; do [ -f "$f" ] && echo "$f"; done
 )"
 if [ -n "$CHANGED" ]; then
-  echo "$CHANGED" | xargs pnpm exec biome check
+  echo "$CHANGED" | xargs pnpm exec biome check --no-errors-on-unmatched
 else
   echo "  (no changed .ts/.tsx files)"
 fi
