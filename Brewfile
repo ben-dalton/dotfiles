@@ -61,7 +61,10 @@ cask 'codex'
 # cask '1password'
 cask 'arc'
 cask 'chatgpt'
-cask 'cleanshot'            # license key in 1Password
+# cask 'cleanshot'          # pinned to 4.8.11 (license doesn't cover 5.x); the cask
+#                           # always installs latest, so install by hand from
+#                           # https://updates.getcleanshot.com/v3/CleanShot-X-4.8.11.dmg
+#                           # license key in 1Password
 cask 'clipy'
 cask 'elgato-stream-deck'
 # cask 'figma'
